@@ -1,9 +1,11 @@
 /**
- * Title of Project
- * Author Name
+ * Drawing Experiments
+ * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ *
+ * Experimenting with p5's drawing and color
+ * 
+ * Currently drawing a face.
  */
 
 "use strict";
@@ -17,7 +19,7 @@ function preload() {
 
 
 /**
- * Description of setup
+ * Drawing a face on the canvas.
 */
 function setup() {
 createCanvas(500,500);
