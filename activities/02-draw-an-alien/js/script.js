@@ -40,6 +40,12 @@ ellipse(400, 240, 80, 200);
 //draw the nostrils
 ellipse(310,300,10,20);
 ellipse(330,300,10,20);
+
+//draw the mouth
+stroke(200, 0, 0);
+strokeWeight(5);
+rectMode(CENTER);
+rect(320, 370, 100, 25);
 }
 
 
