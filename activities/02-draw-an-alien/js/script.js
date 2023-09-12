@@ -3,7 +3,7 @@
  * Nancy He
  * 
  * 
- * Draws an alien on the canvas
+ * Draws an alien on the canvas, I drew the alien from Toy Story.
  */
 
 "use strict";
