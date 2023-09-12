@@ -23,29 +23,46 @@ function setup() {
 createCanvas(640, 480);
 background(240, 173, 197);
 
-//Draw a grey body
+//Draw a body
 noStroke();
-fill(146, 148, 147);
-ellipse(320, 480, 400, 300);
+fill(105, 149, 207);
+ellipse(320, 480, 450, 300);
 
-//Draw a darker grey face
-fill(125, 125, 125);
-ellipse(320, 240, 260, 360);
+//Draw the collar
+fill(183, 111, 237);
+ellipse(320, 300, 410, 300);
 
-//Draw the black eyes
-fill(0)
-ellipse(240,240, 80, 200);
-ellipse(400, 240, 80, 200);
+//Draw a face
+fill(187, 250, 160);
+ellipse(320, 240, 500, 300);
 
-//Draw the nostrils
-ellipse(310,300,10,20);
-ellipse(330,300,10,20);
+//Draw the eyes
+fill(250);
+ellipse(180, 240, 90, 90);
+ellipse(320, 220, 90, 90);
+ellipse(460, 240, 90, 90);
+
+//Draw the pupils
+fill(0);
+ellipse(180, 240, 60, 60);
+ellipse(320, 220, 60, 60);
+ellipse(460, 240, 60, 60);
 
 //Draw the mouth
-stroke(200, 0, 0);
+stroke(0);
 strokeWeight(5);
-rectMode(CENTER);
-rect(320, 370, 100, 25);
+line(250, 310, 320, 350);
+line(320, 350, 390, 310);
+
+//Draw the ears
+noStroke();
+fill(187, 250, 160);
+triangle(60, 310, 30, 60, 120, 240);
+triangle(520, 240, 610, 60, 580, 310);
+
+//Draw the anthena
+triangle(300, 100, 320, 30, 340, 100);
+circle(320, 30, 30);
 }
 
 
