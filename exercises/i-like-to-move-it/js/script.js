@@ -37,5 +37,9 @@ noStroke();
 function draw() {
 //background
 background(bg.r,bg.g,bg.b);
+//circle
+fill(mouseX, mouseY, mouseX);
+ellipse(mouseX, 250, mouseY);
+
 
 }
