@@ -40,6 +40,12 @@ background(bg.r,bg.g,bg.b);
 //circle
 fill(mouseX, mouseY, mouseX);
 ellipse(mouseX, 250, mouseY);
-
+//square
+fill(mouseY, mouseX, 200);
+rect(x, 100, 100, 100);
+x += 3;
+if (x>width)(
+    x=0
+)
 
 }
