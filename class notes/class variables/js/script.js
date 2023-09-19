@@ -28,6 +28,7 @@ function preload() {
 function setup() {
 createCanvas(500,500)
 background(0);
+colorMode(HSL);
 
 }
 
@@ -36,11 +37,8 @@ background(0);
  * Description of draw()
 */
 function draw() {
-
-    let r = map(me.x, 0, width, 255, 0);
-    let g = map(me.x, 0, width, 0, 255);
-    let b = map(me.x, 0, width, 255, 0);
-stroke(r, g, b);
+    let hue = map(me.x, 0, width, 360, 0);
+stroke(hue,100, 50);
 line(me.x, me.y, me.x, me.y-me.h);
 //changing the position
 me.x += me.speed;
