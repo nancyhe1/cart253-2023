@@ -45,7 +45,12 @@ function draw() {
     //circle
     fill(mouseX, mouseY, mouseX);
     ellipse(mouseX, 350, mouseY);
-    
+    //cat's legs
+    fill(150);
+    rect(x,190,25,30);
+    rect(x+75,190,25,30);
+    //cat's tail
+    rect(x-40,100,50,20);
     //square
     fill(mouseY, mouseX, 200);
     rect(x, 100, 100, 100);
