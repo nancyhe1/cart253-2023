@@ -36,8 +36,11 @@ background(0);
  * Description of draw()
 */
 function draw() {
-    let color = map(me.x, 0, width, 255, 0)
-stroke(color);
+
+    let r = map(me.x, 0, width, 255, 0);
+    let g = map(me.x, 0, width, 0, 255);
+    let b = map(me.x, 0, width, 255, 0);
+stroke(r, g, b);
 line(me.x, me.y, me.x, me.y-me.h);
 //changing the position
 me.x += me.speed;
