@@ -2,10 +2,11 @@
  * Excersise 1: I like to move it
  * Nancy He
  * 
- * Here is my attempt for exercise 1.
+ * Here is my attempt for exercise 1. Nyan cat.
  */
 
 "use strict";
+
 //putting in all the variables
 let bg = {
     r:39,
@@ -16,7 +17,7 @@ let x= 0;
 
 
 /**
- * Description of preload
+ * does nothing
 */
 function preload() {
 
@@ -24,7 +25,7 @@ function preload() {
 
 
 /**
- * Description of setup
+ * Set up a canvas and background
 */
 function setup() {
 createCanvas(700,300);
@@ -35,24 +36,28 @@ angleMode(DEGREES);
 
 
 /**
- * Description of draw()
+ * Drawing Nyan cat and animate it
 */
 function draw() {
     noStroke();
-
+    
+    //constrains
+     mouseX = constrain(mouseX,100,600);
+     mouseY = constrain(mouseY,0,200);
     //background
     background(bg.r,bg.g,bg.b);
     //circle
-    fill(mouseX, mouseY, mouseX);
-    ellipse(mouseX, 350, mouseY);
+    let color = map(mouseX,0,width,255,0);
+    fill(color*1.5,color/3,color/0.5);
+    ellipse(mouseX, mouseY, mouseY);
     //cat's legs
     fill(150);
     rect(x,190,25,30);
     rect(x+75,190,25,30);
     //cat's tail
     rect(x-40,100,50,20);
-    //square
-    fill(mouseY, mouseX, 200);
+    //cat body
+    fill(random(0,255), random(0,255), random(0,255));
     rect(x, 100, 100, 100);
     //making a cat,the bongo cat!!
         //head
@@ -77,11 +82,9 @@ function draw() {
         strokeWeight(2);
         line(x+110,160,x+120,152);
         line(x+120,152,x+130,160);
-
-
+//moving the position
     x += 3;
     if (x>width)(
     x=0
-);
-
+    );
 }

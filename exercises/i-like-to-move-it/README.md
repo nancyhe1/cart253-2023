@@ -1,3 +1,3 @@
-# Template p5 project
+# Exercise 1: i like to move it
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+In this exercise, i was asked to make shapes move with constrains and mapping. I recreated the Nyan cat with a floating planet that can be controlled with the mouse.
