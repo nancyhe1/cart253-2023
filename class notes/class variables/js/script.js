@@ -1,5 +1,5 @@
 /**
- * Title of Project
+ * variables
  * Nancy He
  * 
  * This is a template. You must fill in the title, author, 
