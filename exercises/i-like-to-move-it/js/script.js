@@ -8,9 +8,9 @@
 "use strict";
 //putting in all the variables
 let bg = {
-    r:0,
-    g:0,
-    b:0
+    r:39,
+    g:16,
+    b:87
 }
 let x= 0;
 
@@ -27,7 +27,7 @@ function preload() {
  * Description of setup
 */
 function setup() {
-createCanvas(700,700);
+createCanvas(700,300);
 background(bg.r,bg.g,bg.b);
 noStroke();
 angleMode(DEGREES);
