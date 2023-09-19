@@ -14,6 +14,7 @@ let bg = {
 }
 let x= 0;
 
+
 /**
  * Description of preload
 */
@@ -30,11 +31,6 @@ createCanvas(700,700);
 background(bg.r,bg.g,bg.b);
 noStroke();
 angleMode(DEGREES);
-//making a cat,the bongo cat!!
-fill(255);
-arc(350,350,200,200,180,0);
-triangle(255,320,280,220,350,320);
-triangle(350,320,410,220,445,320);
 }
 
 
@@ -42,16 +38,44 @@ triangle(350,320,410,220,445,320);
  * Description of draw()
 */
 function draw() {
-//background
-background(bg.r,bg.g,bg.b);
-//circle
-fill(mouseX, mouseY, mouseX);
-ellipse(mouseX, 350, mouseY);
-//square
-fill(mouseY, mouseX, 200);
-rect(x, 100, 100, 100);
-x += 3;
-if (x>width)(
+    noStroke();
+
+    //background
+    background(bg.r,bg.g,bg.b);
+    //circle
+    fill(mouseX, mouseY, mouseX);
+    ellipse(mouseX, 350, mouseY);
+    
+    //square
+    fill(mouseY, mouseX, 200);
+    rect(x, 100, 100, 100);
+    //making a cat,the bongo cat!!
+        //head
+        fill(150);
+         ellipse(x+120,150,100,90);
+        triangle(x+70,150,x+80,80,x+130,150);
+        triangle(x+110,150,x+160,80,x+170,150);
+        fill(252, 225, 242);
+        triangle(x+80,130,x+83,90,x+100,115);
+        triangle(x+140,115,x+157,90,x+160,130);
+        //eyes
+        fill(0);
+        ellipse(x+90,150,15,15);
+        ellipse(x+150,150,15,15);
+        fill(255);
+        ellipse(x+88,145,5,5);
+        ellipse(x+148,145,5,5);
+        //nose and mouth
+        fill(0);
+        ellipse(x+120,150,12,10);
+        stroke(0);
+        strokeWeight(2);
+        line(x+110,160,x+120,152);
+        line(x+120,152,x+130,160);
+
+
+    x += 3;
+    if (x>width)(
     x=0
 );
 
