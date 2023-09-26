@@ -2,24 +2,32 @@
  * Exercise 2: Dodge em
  * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * this my attempt of making a covid19 dodge game.
  */
 
 "use strict";
 
+//Variables
 let covid19 = {
     x: 0,
     y: 250,
     size: 100,
     vx: 0,
-    vy: 0,
+    vy: 3,
+    ax: 2,
+    ay: 1,
     speed: 5,
     image: undefined
 };
 let user = {
     x: 250,
     y: 250,
+    vx: 0,
+    vy: 0,
+    ax: 0,
+    ay: 0,
+    acceleration: 0.2,
+    maxSpeed: 6,
     size: 100,
     fill: 255,
     image: undefined
@@ -41,7 +49,8 @@ function setup() {
     covid19.y = random(0,height);
     covid19.vx = covid19.speed;
 
-    noCursor();
+
+    //noCursor();
 }
 
 
@@ -68,10 +77,32 @@ function draw() {
         covid19.x = 0;
         covid19.y = random(0,height);
     } 
+    if (covid19.y > height) {
+        covid19.x = random(0,width);
+        covid19.y = 0;
+    }
+    
 
     //user movement
-    user.x = mouseX;
-    user.y = mouseY;
+    if (mouseX < user.x) {
+        user.ax = -user.acceleration;
+      }
+      else {
+        user.ax = user.acceleration;
+      }
+      if (mouseY < user.y) {
+        user.ay =-user.acceleration;
+      }
+      else {
+        user.ay = user.acceleration;
+      }
+    user.vx = user.vx + user.ax;
+    user.vx = constrain(user.vx,-user.maxSpeed,user.maxSpeed);
+    user.vy = user.vy + user.ay;
+    user.vy = constrain(user.vy,-user.maxSpeed,user.maxSpeed);
+
+    user.x = user.x + user.vx;
+    user.y = user.y + user.vy;
 
     //check for catching covid19
     let d = dist(user.x,user.y,covid19.x,covid19.y);
