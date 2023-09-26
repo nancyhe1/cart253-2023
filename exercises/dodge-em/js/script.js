@@ -13,6 +13,8 @@
 "use strict";
 
 //Variables
+let gameOver = false;
+
 let covid19 = {
     x: 0,
     y: 0,
@@ -21,7 +23,6 @@ let covid19 = {
     vy: 0,
     ax: 0,
     ay: 0,
-    acceleration: 0.2,
     speed: 0.25,
     image: undefined,
     xoff: 0.0,
@@ -34,7 +35,7 @@ let user = {
     vy: 0,
     ax: 0,
     ay: 0,
-    acceleration: 0.2,
+    acceleration: 0.25,
     maxSpeed: 10,
     size: 100,
     fill: 255,
@@ -44,6 +45,9 @@ let user = {
 
 let numStatic = 1000;
 
+/**
+ * adding image to shapes
+*/
 function preload() {
     covid19.image = loadImage("assets/images/covid19 virus.png");
     user.image = loadImage("assets/images/smiling emoji.webp");
@@ -51,7 +55,7 @@ function preload() {
 }
 
 /**
- * Description of setup
+ * setting up the canvas
 */
 function setup() {
     createCanvas(windowWidth,windowHeight);
@@ -59,13 +63,12 @@ function setup() {
     covid19.y = random(0,height);
     covid19.vx = covid19.speed;
 
-
     //noCursor();
 }
 
 
 /**
- * Description of draw()
+ * making the user and covid19
 */
 function draw() {
     background(0);
@@ -111,16 +114,9 @@ function draw() {
     
     //covid movement
 
-    covid19.x = random(0,width);
-    covid19.y = random(0,height);
-    //covid19.x = covid19.x + covid19.vx;
-    //covid19.y = covid19.y + covid19.vy;
-    
-    //if (covid19.y > height) {
-       // covid19.x = random(0,width);
-        //covid19.y = 0;
-    //}
-
+    covid19.x += user.x;
+    covid19.y += user.y;
+   
     covid19.xoff = covid19.xoff + 0.01;
     covid19.x = noise(covid19.xoff) * width;
     covid19.yoff = covid19.yoff + 0.03;
@@ -137,13 +133,26 @@ function draw() {
     //check for catching covid19
     let d = dist(user.x,user.y,covid19.x,covid19.y);
     if (d < covid19.size/2 + user.size/2) {
+        gameOver = true;
         noLoop();
+        //changing the user image
         image(user.dieImage,user.x,user.y,user.size,user.size);
+        //adding text to the game over
         textAlign(CENTER);
         textSize(40);
         text('YOU CAUGHT COVID!', windowWidth/2, windowHeight/2);
+        
+        //click tp restart text
+        textSize(30);
+        fill(255);
+        text('CLICK TO RESTART',windowWidth/2,windowHeight/2+50);
+
     }
 
+}
 
-
+function mouseClicked() {
+if (gameOver) {
+    location.reload();
+}
 }
