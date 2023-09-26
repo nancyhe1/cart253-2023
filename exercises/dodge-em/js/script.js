@@ -64,7 +64,16 @@ function draw() {
     for (let i = 0; i < numStatic; i++) {
         let x = random(0,width);
         let y = random(0,height);
+        stroke(255,255,255,90);
+        strokeWeight(2);
+        point(x,y);
+    
+    }
+    for (let i = 0; i < numStatic; i++) {
+        let x = random(0,width);
+        let y = random(0,height);
         stroke(255);
+        strokeWeight(3);
         point(x,y);
     
     }
@@ -77,11 +86,7 @@ function draw() {
         covid19.x = 0;
         covid19.y = random(0,height);
     } 
-    if (covid19.y > height) {
-        covid19.x = random(0,width);
-        covid19.y = 0;
-    }
-    
+
 
     //user movement
     if (mouseX < user.x) {
