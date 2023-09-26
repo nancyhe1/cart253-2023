@@ -15,20 +15,22 @@ let covid19 = {
     vx: 0,
     vy: 0,
     speed: 5,
-    fill: {
-        r: 255,
-        g: 0,
-        b: 0
-    }
+    image: undefined
 };
 let user = {
     x: 250,
     y: 250,
     size: 100,
-    fill: 255
+    fill: 255,
+    image: undefined
 }
 
-let numStatic = 5000;
+let numStatic = 1000;
+
+function preload() {
+    covid19.image = loadImage("assets/images/covid19 virus.png");
+    user.image = loadImage("assets/images/smiling emoji.webp");
+}
 
 /**
  * Description of setup
@@ -78,12 +80,11 @@ function draw() {
     }
 
     //Display covid19
-    fill(covid19.fill.r,covid19.fill.g,covid19.fill.b);
-    ellipse(covid19.x,covid19.y,covid19.size);
+    imageMode(CENTER)
+    image(covid19.image,covid19.x,covid19.y,covid19.size,covid19.size);
 
     //display user
-    fill(user.fill);
-    ellipse(user.x,user.y,user.size);
+    image(user.image,user.x,user.y,user.size,user.size);
 
 
 }
