@@ -8,53 +8,26 @@
 
 "use strict";
 
-let circle = {
-    x: 0,
-    y: 250,
-    size: 100,
-    vx: 1,
-    vy: 0
-  }
-  
-  function setup() {
+function setup() {
     createCanvas(500, 500);
   }
   
   function draw() {
     background(0);
+
+    parallels(100,100,5,3,100,10);
+    parallels(50,50,10,1,20,5);
+    parallels(200,200,15,7,3,20);
+    parallels(312,257,20,0.5,300,2);
   
-    move(); // Call our move function so the circle position is updates
-    wrap(); // Call our wrap function so the circle moves back to the left if it reaches the right
-    display(); // Call our display function so the circle is displayed
-  }
-  
-  // Defining our move function
-  function move() {
-    circle.x = circle.x + circle.vx;
-    circle.y = circle.y + circle.vy;
-  }
-  
-  // Defining our wrap function
-  function wrap() {
-    if (circle.x > width) {
-      reset();
-    }
-  }
-  
-  // Defining our reset function
-  function reset() {
-    circle.x = 0;
-    circle.vx = circle.vx + 1;
-    circle.size = circle.size + 5;
-  }
-  
-  // Defining our display function
-  function display() {
-    fill(255,0,0);
-    ellipse(circle.x, circle.y, circle.size);
-  }
-  
-  function mousePressed() {
-    // CALLING reset()
-    reset();
+   function parallels(x,y,numLines, lineWidth,lineHeight,lineSpacing) {
+     
+     for (let i = 0; i < numLines; i++) {
+       noStroke();
+       fill(255);
+       rectMode(CENTER);
+       rect(x, y, lineWidth, lineHeight);
+       x = x + lineSpacing;
+     }
+   }
   }
