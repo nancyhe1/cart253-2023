@@ -2,31 +2,35 @@
  * Title of Project
  * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ *  - How does keyReleased() work?
+ - text() alignment
+ - When to use dist()?
+ - Movement based on angle and speed (polar coordinates)
+ - Making one shape follow another
+
  */
 
 "use strict";
 
-/**
- * Description of preload
-*/
-function preload() {
+let bg = 127;
 
-}
-
-
-/**
- * Description of setup
-*/
 function setup() {
+    createCanvas(800, 350);
+}
 
+function draw() {
+    background(bg);
+}
+
+function keyPressed() {
+    if (key === `p`) {
+        bg = 200;
+    }
 }
 
 
-/**
- * Description of draw()
-*/
-function draw() {
-
+function keyReleased() {
+    if (key === `p`) {
+        bg = 0;
+    }
 }
