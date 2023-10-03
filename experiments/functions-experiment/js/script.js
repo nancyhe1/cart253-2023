@@ -16,20 +16,15 @@ function setup() {
 function draw() {
   background(bg);
 
-  textAlign(CENTER, CENTER);
-  textSize(64);
-  fill(255);
-  text(keyCode, 250, 250);
-}
-
-// keyPressed() is called whenever a key is pressed!
-function keyPressed() {
-   if (keyCode === UP_ARROW) {
-    bg = bg +10;
-    bg = constrain(bg,0,255);
-   }
-   else if (keyCode === DOWN_ARROW) {
-    bg = bg-10;
-    bg = constrain(bg,0,255);
-   }
+   // Check if the a key (code 65) is currently pressed
+   if (keyIsDown(65)) {
+    // If it is, display a square
+    rectMode(CENTER);
+    rect(width / 2, height / 2, 100, 100);
+  }
+  // Otherwise check if the b key (code 66) is currently pressed
+  else if (keyIsDown(66)) {
+    // If it is, display a circle
+    ellipse(width / 2, height / 2, 100, 100);
+  }
 }
