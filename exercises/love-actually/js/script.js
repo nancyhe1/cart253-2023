@@ -13,16 +13,16 @@ let circle1 = {
     size: 100,
     vx: 0,
     vy: 0,
-    speed:4,
+    speed:5,
 };
 // the stalker
 let circle2 = {
-    x: 400,
-    y: 400,
+    x: 0,
+    y: 0,
     size: 75,
     vx: 0,
     vy: 0,
-    speed:0.25,
+    speed:0.5,
     image: undefined
 };
 // the partner
@@ -32,7 +32,7 @@ let partner = {
     size: 150,
     vx: 0,
     vy: 0,
-    speed:10,
+    speed:12,
 }
 
 let state = 'title'; // can be: title, simulation, love , sadness
@@ -55,7 +55,7 @@ circle1.y = height/2;
 circle2.x = width*2/3;
 circle2.y = height/3;
 
-partner.x = width/2;
+partner.x = width/3;
 partner.y = height/2;
 
 //start circles moving in random direction
@@ -159,6 +159,7 @@ function title() {
     text('Press any key to Start',width/2,height/2+50);
     textSize(25);
     text('Use arrow keys to move',width/2,height/2+100);
+    text('Catch up to your partner and be saved!',width/2,height/2+150);
     pop();
 }
 
@@ -234,9 +235,9 @@ let d = dist(circle1.x,circle1.y,circle2.x,circle2.y);
 if (d < circle1.size/2 + circle2.size/2) {
     state = 'catchStalker';
 }
-// if the partner touches the player 
-let d2 = dist(partner.x, partner.y, circle2.x,circle2.y);
-if (d2 < partner.size/2 + circle2.size/2) {
+// if the you catch up to the partner 
+let d2 = dist(partner.x, partner.y, circle1.x,circle1.y);
+if (d2 < partner.size/2 + circle1.size/2) {
     state = 'protection';
 }
 }
