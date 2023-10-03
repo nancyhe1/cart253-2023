@@ -41,7 +41,7 @@ function preload() {
 function setup() {
 createCanvas(windowWidth,windowHeight);
 
-circle1.x = width/3;
+circle1.x = width/2;
 circle1.y = height/2;
 
 circle2.x = width*2/3;
@@ -60,6 +60,8 @@ circle2.vy = random(-circle2.speed,circle2.speed);
 */
 function draw() {
 background(0);
+circle1Controls();
+circle2Controls();
 
 if (state === 'title') {
 title();
@@ -76,12 +78,47 @@ sadness();
 }
 }
 
+function circle1Controls() {
+    if (keyIsDown(LEFT_ARROW)) {
+        // If it is, set the x velocity to be negative
+        circle1.vx = -circle1.speed;
+      }
+      // Otherwise is the right arrow pressed?
+      else if (keyIsDown(RIGHT_ARROW)) {
+        // If it is, set the x velocity to be positive
+        circle1.vx = circle1.speed;
+      }
+      // If neither of those keys are pressed...
+      else {
+        // Then set the x velocity to 0 to stop moving horizontally
+        circle1.vx = 0;
+      }
+    
+      // Do the same thing with vertical movement and the UP and DOWN keys
+      if (keyIsDown(UP_ARROW)) {
+        circle1.vy = -circle1.speed;
+      }
+      else if (keyIsDown(DOWN_ARROW)) {
+        circle1.vy = circle1.speed;
+      }
+      else {
+        circle1.vy = 0;
+      }
+}
+
+function circle2Controls() {
+    circle2.x = circle1.x + 100 * 0.04;
+    circle2.y = circle1.y + 100 * 0.04;
+
+}
+
 function title() {
     push();
     textSize(64)
     fill(200,100,100);
     textAlign(CENTER,CENTER);
     text('LOVE?', width/2, height/2);
+    text()
     pop();
 }
 
@@ -93,6 +130,7 @@ display();
 
 }
 
+    
 function love() {
     push();
     textSize(64)
@@ -138,7 +176,8 @@ function checkOverlap() {
     //check if the circles overlap
 let d = dist(circle1.x,circle1.y,circle2.x,circle2.y);
 if (d < circle1.size/2 + circle2.size/2) {
-    state = 'love';
+    //state = 'love';
+    fill(random(0,255), 0 , 0);
 }
 }
 
@@ -148,8 +187,9 @@ ellipse(circle1.x, circle1.y, circle1.size);
 ellipse(circle2.x, circle2.y, circle2.size);
 }
 
-function mousePressed() {
+function keyPressed() {
     if (state === 'title') {
         state = 'simulation';
     }
+    
 }
