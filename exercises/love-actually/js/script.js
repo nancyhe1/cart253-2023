@@ -157,6 +157,8 @@ function title() {
     textSize(30);
     fill(255);
     text('Press any key to Start',width/2,height/2+50);
+    textSize(25);
+    text('Use arrow keys to move',width/2,height/2+100);
     pop();
 }
 
