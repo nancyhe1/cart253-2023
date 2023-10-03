@@ -23,6 +23,7 @@ let circle2 = {
     vx: 0,
     vy: 0,
     speed:0.25,
+    image: undefined
 };
 // the partner
 let partner = {
@@ -40,7 +41,7 @@ let state = 'title'; // can be: title, simulation, love , sadness
  * Description of preload
 */
 function preload() {
-
+circle2.image = loadImage("assets/images/clown.png");
 }
 
 /**
@@ -89,24 +90,18 @@ else if (state === 'sadness') {
 sadness();
 }
 }
-
+//player controlling the circle
 function circle1Controls() {
     if (keyIsDown(LEFT_ARROW)) {
-        // If it is, set the x velocity to be negative
         circle1.vx = -circle1.speed;
       }
-      // Otherwise is the right arrow pressed?
       else if (keyIsDown(RIGHT_ARROW)) {
-        // If it is, set the x velocity to be positive
+        
         circle1.vx = circle1.speed;
       }
-      // If neither of those keys are pressed...
       else {
-        // Then set the x velocity to 0 to stop moving horizontally
         circle1.vx = 0;
       }
-    
-      // Do the same thing with vertical movement and the UP and DOWN keys
       if (keyIsDown(UP_ARROW)) {
         circle1.vy = -circle1.speed;
       }
@@ -158,8 +153,10 @@ function title() {
     textSize(40);
     fill(200,100,100);
     textAlign(CENTER,CENTER);
-    text('Try to escape the creepy stalker', width/2, height/2);
-    text()
+    text('Try to escape the creepy stalker 🤡', width/2, height/2);
+    textSize(30);
+    fill(255);
+    text('Press any key to Start',width/2,height/2+50);
     pop();
 }
 
@@ -173,7 +170,7 @@ display();
   
 function catchStalker() {
     push();
-    textSize(64)
+    textSize(64);
     fill(200,100,100);
     textAlign(CENTER,CENTER);
     text('You got caught ;((', width/2, height/2);
@@ -182,19 +179,22 @@ function catchStalker() {
 
 function protection() {
     push();
-    textSize(64)
+    background(217, 11, 118);
+    textSize(40);
     fill(255);
     textAlign(CENTER,CENTER);
-    text('Yay your partner saved you!', width/2, height/2);
+    text('Yay your partner saved you!💖', width/2, height/2);
     pop();
 }
 //the end game
 function sadness() {
     push();
-    textSize(64)
+    textSize(50);
     fill(127);
     textAlign(CENTER,CENTER);
-    text('you think you escaped', width/2, height/2);
+    text('You think you escaped? 🤡', width/2, height/2);
+    //imageMode(CENTER);
+    //background(circle2.image,width/2,height/2);
     pop(); 
 }
 
@@ -245,8 +245,8 @@ function display() {
 fill(255);
 ellipse(circle1.x, circle1.y, circle1.size);
 //circle2 the stalker
-fill(54, 97, 64, 60);
-ellipse(circle2.x, circle2.y, circle2.size);
+imageMode(CENTER);
+image(circle2.image,circle2.x, circle2.y, circle2.size,circle2.size);
 //circle3 the partner
 fill(166, 130, 207);
 ellipse(partner.x, partner.y, partner.size);
