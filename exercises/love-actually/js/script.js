@@ -2,28 +2,37 @@
  * Activity 5: Looking for love
  * Nancy He
  * 
- * simple love game with 2 circles
+ * simple game trying to escape the other circle
  */
 
 "use strict";
-
+// the player
 let circle1 = {
     x: 0,
     y: 0,
     size: 100,
     vx: 0,
     vy: 0,
-    speed:5,
+    speed:4,
 };
-
+// the stalker
 let circle2 = {
-    x: 0,
-    y: 0,
-    size: 100,
+    x: 400,
+    y: 400,
+    size: 75,
     vx: 0,
     vy: 0,
-    speed:5,
+    speed:0.25,
 };
+// the partner
+let partner = {
+    x: 0,
+    y: 0,
+    size: 150,
+    vx: 0,
+    vy: 0,
+    speed:10,
+}
 
 let state = 'title'; // can be: title, simulation, love , sadness
 
@@ -34,24 +43,23 @@ function preload() {
 
 }
 
-
 /**
  * Description of setup
 */
 function setup() {
 createCanvas(windowWidth,windowHeight);
-
 circle1.x = width/2;
 circle1.y = height/2;
 
 circle2.x = width*2/3;
-circle2.y = height/2;
+circle2.y = height/3;
+
+partner.x = width/2;
+partner.y = height/2;
 
 //start circles moving in random direction
-circle1.vx = random(-circle1.speed,circle1.speed);
-circle2.vx = random(-circle2.speed,circle2.speed);
-circle1.vy = random(-circle1.speed,circle1.speed);
-circle2.vy = random(-circle2.speed,circle2.speed);
+partner.vx = random(-partner.speed,partner.speed);
+partner.vy = random(-partner.speed,partner.speed);
 }
 
 
@@ -62,6 +70,7 @@ function draw() {
 background(0);
 circle1Controls();
 circle2Controls();
+partnerControls();
 
 if (state === 'title') {
 title();
@@ -70,8 +79,11 @@ else if (state === 'simulation') {
     simulation();
 
 }
-else if (state === 'love') {
-love();
+else if (state === 'catchStalker') {
+catchStalker();
+}
+else if (state === 'protection') {
+    protection();
 }
 else if (state === 'sadness') {
 sadness();
@@ -107,17 +119,46 @@ function circle1Controls() {
 }
 
 function circle2Controls() {
-    circle2.x = circle1.x + 100 * 0.04;
-    circle2.y = circle1.y + 100 * 0.04;
+   let dx = circle2.x - circle1.x;
+   let dy = circle2.y - circle1.y;
 
+   if (dx < 0) {
+    circle2.vx = circle2.speed;
+   }
+
+   else if (dx > 0) {
+    circle2.vx = -circle2.speed;
+   }
+
+   if (dy < 0) {
+    circle2.vy = circle2.speed;
+  }
+  else if (dy > 0) {
+    circle2.vy = -circle2.speed;
+  }
+}
+
+function partnerControls() {
+if (partner.x > width) {
+    partner.vx = -partner.speed;
+}
+else if (partner.x < 0) {
+    partner.vx = partner.speed;
+}
+if (partner.y > height) {
+    partner.vy = -partner.speed;
+}
+if (partner.y < 0) {
+    partner.vy = partner.speed;
+}
 }
 
 function title() {
     push();
-    textSize(64)
+    textSize(40);
     fill(200,100,100);
     textAlign(CENTER,CENTER);
-    text('LOVE?', width/2, height/2);
+    text('Try to escape the creepy stalker', width/2, height/2);
     text()
     pop();
 }
@@ -129,23 +170,31 @@ checkOverlap();
 display();
 
 }
-
-    
-function love() {
+  
+function catchStalker() {
     push();
     textSize(64)
     fill(200,100,100);
     textAlign(CENTER,CENTER);
-    text('LOVE!', width/2, height/2);
+    text('You got caught ;((', width/2, height/2);
     pop();
 }
 
+function protection() {
+    push();
+    textSize(64)
+    fill(255);
+    textAlign(CENTER,CENTER);
+    text('Yay your partner saved you!', width/2, height/2);
+    pop();
+}
+//the end game
 function sadness() {
     push();
     textSize(64)
     fill(127);
     textAlign(CENTER,CENTER);
-    text(';((', width/2, height/2);
+    text('you think you escaped', width/2, height/2);
     pop(); 
 }
 
@@ -156,6 +205,9 @@ circle1.y = circle1.y + circle1.vy;
 
 circle2.x = circle2.x + circle2.vx;
 circle2.y = circle2.y + circle2.vy;
+
+partner.x = partner.x + partner.vx;
+partner.y = partner.y + partner.vy;
 }
 
 function checkOffScreen() {
@@ -164,7 +216,9 @@ function checkOffScreen() {
     state = 'sadness';
 };
 }
+
 function isOffScreen(circle) {
+    //check if they go off screen
     if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
         return true;
     }
@@ -176,15 +230,26 @@ function checkOverlap() {
     //check if the circles overlap
 let d = dist(circle1.x,circle1.y,circle2.x,circle2.y);
 if (d < circle1.size/2 + circle2.size/2) {
-    //state = 'love';
-    fill(random(0,255), 0 , 0);
+    state = 'catchStalker';
+}
+// if the partner touches the player 
+let d2 = dist(partner.x, partner.y, circle2.x,circle2.y);
+if (d2 < partner.size/2 + circle2.size/2) {
+    state = 'protection';
 }
 }
 
 function display() {
 //display the circles
+//circle1 the player
+fill(255);
 ellipse(circle1.x, circle1.y, circle1.size);
+//circle2 the stalker
+fill(54, 97, 64, 50);
 ellipse(circle2.x, circle2.y, circle2.size);
+//circle3 the partner
+fill(166, 130, 207);
+ellipse(partner.x, partner.y, partner.size);
 }
 
 function keyPressed() {
