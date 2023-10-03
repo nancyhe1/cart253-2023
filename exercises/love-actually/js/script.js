@@ -245,7 +245,7 @@ function display() {
 fill(255);
 ellipse(circle1.x, circle1.y, circle1.size);
 //circle2 the stalker
-fill(54, 97, 64, 50);
+fill(54, 97, 64, 60);
 ellipse(circle2.x, circle2.y, circle2.size);
 //circle3 the partner
 fill(166, 130, 207);
