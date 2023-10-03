@@ -7,46 +7,33 @@
  */
 
 "use strict";
+let hello = {
+    string: `Hello, World!`,
+    x:0,
+    y:0,
+    vx:5,
+    vy:1,
+    size:64,
+};
 
-let circle = {
-    x: 250,
-    y: 250,
-    size: 100,
-    vx: 0,
-    vy: 0
-  }
-  
-  function setup() {
-    createCanvas(500, 500)
-    reset();
+function setup() {
+    createCanvas(500,500);
   }
   
   function draw() {
     background(0);
-  
-    move();
-  
-    let offScreen = circleIsOffScreen();
-    if (offScreen) {
-      reset();
-    }
-  
-    ellipse(circle.x, circle.y, circle.size);
-  }
-  
-  function circleIsOffScreen() {
-    let result = (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height);
-    return result;
-  }
-  
-  function move() {
-    circle.x = circle.x + circle.vx;
-    circle.y = circle.y + circle.vy;
-  }
-  
-  function reset() {
-    circle.x = 250;
-    circle.y = 250;
-    circle.vx = random(-10, 10);
-    circle.vy = random(-10, 10);
+
+    hello.x = hello.x+hello.vx;
+    hello.y = hello.y+hello.vy;
+    hello.size = hello.size + 1;
+
+    textAlign(CENTER,CENTER);
+    textSize(hello.size);
+    textStyle(BOLD);
+
+    stroke(50,200,50);
+    strokeWeight(3);
+
+    fill(200,50,200);
+    text(hello.string,hello.x,hello.y);
   }
