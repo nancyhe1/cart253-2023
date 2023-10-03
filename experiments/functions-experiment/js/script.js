@@ -7,66 +7,29 @@
  */
 
 "use strict";
-let circle = {
-    x: 0,
-    y: 250,
-    size: 100,
-    vx: 0,
-    vy: 0,
-    speed: 2,
-  };
+let bg = 0;
 
-  let state = 'title'; //possible states are: title, animation, ending
-  
-  function setup() {
-    createCanvas(500, 500);
-    circle.vx = circle.speed;
+function setup() {
+  createCanvas(500, 500);
+}
 
-    textSize(32);
-    textAlign(CENTER,CENTER);
-  }
-  
-  function draw() {
-    background(0);
+function draw() {
+  background(bg);
 
-    if(state === 'title') {
-        title();
-    }
-    else if(state==='animation') {
-        animation();
-    }
-    else if(state==='ending') {
-        ending();
-    }
-  }
+  textAlign(CENTER, CENTER);
+  textSize(64);
+  fill(255);
+  text(keyCode, 250, 250);
+}
 
-    function title() {
-    //title
-    fill(255);
-    text('Life.',width/2,height/2);
-    }
-
-    function animation() {
-    //animation
-    circle.x = circle.x + circle.vx;
-    circle.y = circle.y + circle.vy;
-
-    if(circle.x>width) {
-        state = 'ending';
-    }
-    
-    ellipse(circle.x, circle.y, circle.size);
-    }
-
-   function ending() {
-    //ending
-    fill(127);
-    text('its all over.',width/2,height/2);
-    }
-
-
-  function keyPressed() {
-    if(state === 'title') {
-    state = 'animation';
-    }
-  }
+// keyPressed() is called whenever a key is pressed!
+function keyPressed() {
+   if (keyCode === UP_ARROW) {
+    bg = bg +10;
+    bg = constrain(bg,0,255);
+   }
+   else if (keyCode === DOWN_ARROW) {
+    bg = bg-10;
+    bg = constrain(bg,0,255);
+   }
+}
