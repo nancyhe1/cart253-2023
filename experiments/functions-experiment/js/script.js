@@ -12,7 +12,7 @@ let circle = {
     y: 250,
     vx: 0,
     vy: 0,
-    speed: 5,
+    speed: 2,
     size: 100
   }
   
@@ -21,35 +21,14 @@ let circle = {
   }
   
   function draw() {
-    background(0);
-  
-    // First check for horizontal movement
-    // Is the left arrow pressed?
-    if (keyIsDown(LEFT_ARROW)) {
-      // If it is, set the x velocity to be negative
-      circle.vx = -circle.speed;
-    }
-    // Otherwise is the right arrow pressed?
-    else if (keyIsDown(RIGHT_ARROW)) {
-      // If it is, set the x velocity to be positive
-      circle.vx = circle.speed;
-    }
-    // If neither of those keys are pressed...
-    else {
-      // Then set the x velocity to 0 to stop moving horizontally
-      circle.vx = 0;
-    }
-  
-    // Do the same thing with vertical movement and the UP and DOWN keys
-    if (keyIsDown(UP_ARROW)) {
-      circle.vy = -circle.speed;
-    }
-    else if (keyIsDown(DOWN_ARROW)) {
-      circle.vy = circle.speed;
-    }
-    else {
-      circle.vy = 0;
-    }
+      background(0);
+
+      let change = random();
+      if (change < 0.1) {
+      
+      circle.vx = random(-circle.speed,circle.speed);
+      circle.vy = random(-circle.speed,circle.speed);
+      }
   
     circle.x = circle.x + circle.vx;
     circle.y = circle.y + circle.vy;
