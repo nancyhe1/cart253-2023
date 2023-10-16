@@ -35,11 +35,18 @@ let seedBag = {
   image: undefined,
 }
 let waterCan = {
-  x:150,
-  y:75,
+  x:325,
+  y:250,
   size:200,
   image: undefined,
   pour: undefined,
+}
+let plant = {
+  x:250,
+  y:350,
+  size:200,
+  image: undefined,
+  sprout: undefined,
 }
 let state = 'title'; //can be: title...
 //let customFont;
@@ -54,7 +61,8 @@ player.texture2 = loadImage("assets/images/closed-glove.png");
 seedBag.image = loadImage("assets/images/seed-bag.png");
 waterCan.image = loadImage("assets/images/can.png");
 waterCan.pour = loadImage("assets/images/water.png");
-
+plant.image = loadImage("assets/images/dirt.png");
+plant.sprout = loadImage("assets/images/sprout.png");
 }
 
 
@@ -68,7 +76,7 @@ createCanvas(canvas.w,canvas.h);
 rectMode(CENTER);
 textAlign(CENTER);
 noCursor();
-waterCan = createDraggableShape(waterCan.x,waterCan.y);
+//waterCan = createDraggableShape(waterCan.x,waterCan.y);
 //textFont(customFont);
 }
 
@@ -95,9 +103,11 @@ function simulation() {
   rect(width/2-100,height*3/5,canvas.w-400,canvas.h-200);//dirt
   //drawing the seed of bag
   image(seedBag.image,seedBag.x,seedBag.y,seedBag.size,seedBag.size);
-  display(); 
   instruction();
- water();
+  //handleDragging(waterCan);
+  water();
+  planting();
+  display(); 
 } 
 function instruction() {
   instructionBox.x = width*9/10+20;
@@ -116,6 +126,12 @@ function water() {
   }
   else {
     image(waterCan.image,waterCan.x,waterCan.y,waterCan.size,waterCan.size);
+  }
+}
+function planting() {
+  image(plant.image,plant.x,plant.y,plant.size,plant.size);
+  if (keyIsDown(87)) {
+    image(plant.sprout,plant.x,plant.y,plant.size,plant.size);
   }
 }
 
@@ -159,10 +175,3 @@ function keyPressed() {
       state = 'simulation';
   } 
 }
-
-
-
-
-
-
-
