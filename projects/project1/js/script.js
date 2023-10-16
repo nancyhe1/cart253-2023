@@ -1,33 +1,33 @@
 /**
- * Title of Project
+ * Project 1
  * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * This is going to be a gardening simulator where you can plant seeds and grow them.
  */
 
 "use strict";
 //setting up my variables
 //player
 let player = {
-    x: 400,
-    y: 375,
-    size: 100,
+    x: 0,
+    y: 0,
+    size: 75,
     vx: 0,
     vy: 0,
     speed: 5,
-}
-let canvas = {
-    w:700,
-    h:500,
+    texture: undefined,
+    texture2: undefined,
 }
 let state = 'title'; //can be: title...
+//let customFont;
 
 /**
  * loading images
 */
 function preload() {
-
+  //customFont = loadFont('assets/font/YoungSerif-Regular');
+player.texture = loadImage("assets/images/gardening-glove.png");
+player.texture2 = loadImage("assets/images/closed-glove.png");
 }
 
 
@@ -35,9 +35,10 @@ function preload() {
  * setting up the canvas
 */
 function setup() {
-createCanvas(canvas.w,canvas.h);
+createCanvas(windowWidth,windowHeight);
 rectMode(CENTER);
 textAlign(CENTER);
+//textFont(customFont);
 }
 
 
@@ -59,32 +60,20 @@ if (state === 'title') {
 }
 function simulation() {
   background(198, 232, 169); //grass
+  fill(135, 79, 15);
+  rect(width/2,height/2,windowWidth-100,windowHeight-200);//dirt
   display(); 
 }
 //player controls
 function playerControls() {
-    if (keyIsDown(65)) { //key code for 'A'
-      console.log("A is pressed");
-        player.vx = -player.speed;
-      }
-      else if (keyIsDown(68)) { //keycode for 'D' 
-        
-        player.vx = player.speed;
-      }
-      else {
-        player.vx = 0;
-      }
-      if (keyIsDown(87)) { //keycode for 'W'
-        player.vy = -player.speed;
-      }
-      else if (keyIsDown(83)) { //keycode for 'S' 
-        player.vy = player.speed;
-      }
-      else {
-        player.vy = 0;
-      }
+   player.x = mouseX;
+   player.y = mouseY;
 player.x = player.x + player.vx;
 player.y = player.y + player.vy; 
+
+//constrain the player withing the canvas
+player.x = constrain(player.x,0,width);
+player.y = constrain(player.y,0,height);
 }
 function title() {
   push();
@@ -99,11 +88,15 @@ function title() {
 }
 
 function display() {
+  if (mouseIsPressed === true) {
+    image(player.texture2,player.x,player.y,player.size,player.size);
+  }
+  else {
 //player appearance
 noStroke();
-fill(181, 115, 209);
-ellipse(player.x,player.y,player.size);
-
+imageMode(CENTER);
+image(player.texture,player.x,player.y,player.size,player.size);
+  } // when the mouse is pressed the glove will appear closed
 }
 
 function keyPressed() {
@@ -113,3 +106,6 @@ function keyPressed() {
   
 }
 
+function mouseIsPressed() {
+  
+}
