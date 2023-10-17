@@ -7,6 +7,7 @@
 
 "use strict";
 //setting up my variables
+let dragPoint = null;
 //player
 let player = {
     x: 0,
@@ -35,18 +36,24 @@ let seedBag = {
   image: undefined,
 }
 let waterCan = {
-  x:325,
-  y:250,
+  x:250,
+  y:80,
   size:200,
   image: undefined,
   pour: undefined,
 }
 let plant = {
   x:250,
-  y:350,
+  y:325,
   size:200,
   image: undefined,
   sprout: undefined,
+}
+let shovel = {
+  x:400,
+  y:80,
+  size:250,
+  image: undefined,
 }
 let state = 'title'; //can be: title...
 //let customFont;
@@ -63,6 +70,7 @@ waterCan.image = loadImage("assets/images/can.png");
 waterCan.pour = loadImage("assets/images/water.png");
 plant.image = loadImage("assets/images/dirt.png");
 plant.sprout = loadImage("assets/images/sprout.png");
+shovel.image = loadImage("assets/images/shovel.png");
 }
 
 
@@ -76,10 +84,8 @@ createCanvas(canvas.w,canvas.h);
 rectMode(CENTER);
 textAlign(CENTER);
 noCursor();
-//waterCan = createDraggableShape(waterCan.x,waterCan.y);
 //textFont(customFont);
 }
-
 
 /**
  * all the game animation
@@ -104,7 +110,8 @@ function simulation() {
   //drawing the seed of bag
   image(seedBag.image,seedBag.x,seedBag.y,seedBag.size,seedBag.size);
   instruction();
-  //handleDragging(waterCan);
+  // drawing the shovel
+  image(shovel.image,shovel.x,shovel.y,shovel.size,shovel.size);
   water();
   planting();
   display(); 
@@ -174,4 +181,18 @@ function keyPressed() {
   if (state === 'title') {
       state = 'simulation';
   } 
+}
+function mouseDragged() {
+  if ((mouseX > waterCan.x - 50) && (mouseX < waterCan.x + 50)) {
+    if ((mouseY > waterCan.y - 50) && (mouseY < waterCan.y + 50)) {
+      waterCan.x = mouseX;
+      waterCan.y = mouseY
+    }
+  }
+  if ((mouseX > shovel.x - 50) && (mouseX < shovel.x + 50)) {
+    if ((mouseY > shovel.y - 50) && (mouseY < shovel.y + 50)) {
+      shovel.x = mouseX;
+      shovel.y = mouseY
+    }
+  }
 }
