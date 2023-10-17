@@ -28,6 +28,12 @@ let instructionBox = {
   y:0,
   w:250,
   h:800,
+} 
+let pot = {
+  x:0,
+  y:0,
+  size:200,
+  image: undefined,
 }
 let seedBag = {
   x:75,
@@ -61,7 +67,6 @@ let dig = {
   size:200,
   image:undefined,
 }
-let seed = 100;
 let state = 'title'; //can be: title...
 //let customFont;
 
@@ -75,10 +80,11 @@ player.texture2 = loadImage("assets/images/closed-glove.png");
 seedBag.image = loadImage("assets/images/seed-bag.png");
 waterCan.image = loadImage("assets/images/can.png");
 waterCan.pour = loadImage("assets/images/water.png");
-plant.image = loadImage("assets/images/dirt.png");
-plant.sprout = loadImage("assets/images/sprout.png");
+//plant.image = loadImage("assets/images/dirt.png");
+//plant.sprout = loadImage("assets/images/sprout.png");
 shovel.image = loadImage("assets/images/shovel.png");
-dig.image = loadImage("assets/images/dig.png");
+//dig.image = loadImage("assets/images/dig.png");
+pot.image = loadImage("assets/images/pot,png");
 }
 
 
@@ -86,8 +92,8 @@ dig.image = loadImage("assets/images/dig.png");
  * setting up the canvas
 */
 function setup() {
-  canvas.w=windowWidth;
-  canvas.h=windowHeight;
+  //canvas.w=windowWidth;
+  //canvas.h=windowHeight;
 createCanvas(canvas.w,canvas.h);
 rectMode(CENTER);
 textAlign(CENTER);
@@ -118,6 +124,8 @@ function simulation() {
   //drawing the seed of bag
   image(seedBag.image,seedBag.x,seedBag.y,seedBag.size,seedBag.size);
   instruction();
+  //drawing the pot
+  image(pot.image,pot.x,pot.y,pot.size,pot.size);
   // drawing the shovel
   image(shovel.image,shovel.x,shovel.y,shovel.size,shovel.size);
   water();
@@ -127,7 +135,7 @@ function simulation() {
 function instruction() {
   instructionBox.x = width*9/10+20;
   instructionBox.y = height/2; 
-  let controlText ="-To plant a seed, drag the seed to the dirt and press 'P' -To water the plant, hover over the plant and press 'W'"
+  let controlText ="-First put some dirt in the pot with the help of the shovel -To plant a seed, drag the seed to the dirt and press 'P' -To water the plant, hover over the plant and press 'W', it will grow as you water it"
   fill(255);
   rect(instructionBox.x,instructionBox.y,instructionBox.w,instructionBox.h);
   textSize(20);
@@ -146,17 +154,9 @@ function water() {
 function shoveling() {
   if (keyIsDown(83)) { //use 'S' key
     image(dig.image,shovel.x-60,shovel.y+70,dig.size,dig.size);
-   //let dig = new Dig(shovel.x-60,shovel.y+70);
-    //garden.push(dig);
-    //dig--; 
     }
 }
-class Dig {
-  constructor(x,y) {
-    this.x = x;
-    this.y = y;
-  }
-}
+
 function planting() {
   //image(plant.image,shovel.x-60,shovel.y+70,plant.size,plant.size);
   if (keyIsDown(87)) { //use 'W' key
@@ -203,12 +203,7 @@ function keyPressed() {
   if (state === 'title') {
       state = 'simulation';
   } 
-  // Press 'p' key to plant a seed
-  if (key === 'p' && seeds > 0) {
-    let seed = new Seed(player.x, player.y);
-    garden.push(seed);
-    seeds--;
-  }
+  
 }
 function mouseDragged() {
   if ((mouseX > waterCan.x - 50) && (mouseX < waterCan.x + 50)) {
@@ -224,22 +219,4 @@ function mouseDragged() {
     }
   }
 }
- // Update and display each plant
- for (let plant of garden) {
-  plant.update();
-  plant.display();
-}
-if (selectedSeed) {
-  // Display the selected seed at the mouse position
-  selectedSeed.x = mouseX;
-  selectedSeed.y = mouseY;
-  fill(255, 204, 0); // Seed color
-  noStroke();
-  ellipse(selectedSeed.x, selectedSeed.y, 20, 20);
-}
-class Seed {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
+ 
