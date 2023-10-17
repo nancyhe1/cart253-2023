@@ -7,7 +7,7 @@
 
 "use strict";
 //setting up my variables
-let dragPoint = null;
+let garden = [];
 //player
 let player = {
     x: 0,
@@ -55,6 +55,13 @@ let shovel = {
   size:250,
   image: undefined,
 }
+let dig = {
+  x:0,
+  y:0,
+  size:200,
+  image:undefined,
+}
+let seed = 100;
 let state = 'title'; //can be: title...
 //let customFont;
 
@@ -71,6 +78,7 @@ waterCan.pour = loadImage("assets/images/water.png");
 plant.image = loadImage("assets/images/dirt.png");
 plant.sprout = loadImage("assets/images/sprout.png");
 shovel.image = loadImage("assets/images/shovel.png");
+dig.image = loadImage("assets/images/dig.png");
 }
 
 
@@ -135,10 +143,24 @@ function water() {
     image(waterCan.image,waterCan.x,waterCan.y,waterCan.size,waterCan.size);
   }
 }
+function shoveling() {
+  if (keyIsDown(83)) { //use 'S' key
+    image(dig.image,shovel.x-60,shovel.y+70,dig.size,dig.size);
+   //let dig = new Dig(shovel.x-60,shovel.y+70);
+    //garden.push(dig);
+    //dig--; 
+    }
+}
+class Dig {
+  constructor(x,y) {
+    this.x = x;
+    this.y = y;
+  }
+}
 function planting() {
-  image(plant.image,plant.x,plant.y,plant.size,plant.size);
-  if (keyIsDown(87)) {
-    image(plant.sprout,plant.x,plant.y,plant.size,plant.size);
+  //image(plant.image,shovel.x-60,shovel.y+70,plant.size,plant.size);
+  if (keyIsDown(87)) { //use 'W' key
+    image(plant.sprout,shovel.x-60, shovel.y+70,plant.size,plant.size);
   }
 }
 
@@ -181,6 +203,12 @@ function keyPressed() {
   if (state === 'title') {
       state = 'simulation';
   } 
+  // Press 'p' key to plant a seed
+  if (key === 'p' && seeds > 0) {
+    let seed = new Seed(player.x, player.y);
+    garden.push(seed);
+    seeds--;
+  }
 }
 function mouseDragged() {
   if ((mouseX > waterCan.x - 50) && (mouseX < waterCan.x + 50)) {
@@ -194,5 +222,24 @@ function mouseDragged() {
       shovel.x = mouseX;
       shovel.y = mouseY
     }
+  }
+}
+ // Update and display each plant
+ for (let plant of garden) {
+  plant.update();
+  plant.display();
+}
+if (selectedSeed) {
+  // Display the selected seed at the mouse position
+  selectedSeed.x = mouseX;
+  selectedSeed.y = mouseY;
+  fill(255, 204, 0); // Seed color
+  noStroke();
+  ellipse(selectedSeed.x, selectedSeed.y, 20, 20);
+}
+class Seed {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
   }
 }
