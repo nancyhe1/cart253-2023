@@ -79,7 +79,7 @@ let dirt = {
   image:undefined,
   active: true,
 }
-let time = 1;
+let timer = 1;
 let state = 'title'; //can be: title...
 //let customFont;
 
@@ -247,15 +247,18 @@ function CheckOverlapSeedBag() {
   }
 }
 
+function time(timer) {
+  timer += 1;
+  
+}
 function watering() {
   if (keyIsDown(87)) {
-    time += 1;
-    if (time = 5) {
-      smallSprout.x = 500;
-      smallSprout.y = 600;
+    timer = millis();
+    if (timer = 2000) {
+    smallSprout.x = 500;
+    smallSprout.y = 600;
     }
   }
-
 }
 function mouseDragged() {
   if ((mouseX > waterCan.x - 100) && (mouseX < waterCan.x + 100)) {
