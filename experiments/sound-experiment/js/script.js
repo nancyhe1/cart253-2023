@@ -8,31 +8,31 @@
 
 "use strict";
 
-let barkSFX;
+let music;
 
-/**
- * Description of preload
-*/
 function preload() {
-barkSFX = loadSound('assets/sounds/bark.wav');
+  music = loadSound(`assets/sounds/bark.wav`);
 }
 
-
-/**
- * Description of setup
-*/
 function setup() {
-createCanvas(500,500);
+  createCanvas(500, 500);
 }
 
-
-/**
- * Description of draw()
-*/
 function draw() {
-background(0);
+  background(0);
 }
 
 function mousePressed() {
-    barkSFX.play();
+  tryMusic();
+}
+
+function keyPressed() {
+  tryMusic();
+}
+
+function tryMusic() {
+  // Play music if this is the first interaction
+  if (!music.isPlaying()) {
+    music.loop();
+  }
 }
