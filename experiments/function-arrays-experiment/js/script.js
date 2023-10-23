@@ -8,32 +8,35 @@
 
 "use strict";
 
-let rates = [1.5, 1.75, 2.25, 2.5, 2.75, 3];
+// An array to store our images
+let images = [];
+// A variable to store the image we want to display
+let displayImage;
 
-// Our sound effect
-let barkSFX;
-
-// preload() loads the barking sound effect
+// preload() loads 10 images
 function preload() {
-  barkSFX = loadSound(`assets/sounds/bark.wav`);
+    for (let i = 0; i < numImages; i++) {
+        // Load the image into a variable
+        // Note that we use i to specify the number in the filename!
+        // Note how nice this is with a template literal string
+        let loadedImage = loadImage(`assets/images/clown-${i}.png`);
+        // Add the loaded image to the images array
+        images.push(loadedImage);
+      }
+// add more images 
 }
 
-// setup() the canvas ready
+// setup() selects the image to display randomly
 function setup() {
   createCanvas(600, 600);
+  // Choose an image to display randomly from the array
+  displayImage = random(images);
 }
 
-// draw() does nothing much
+// draw() displays the randomly chosen image
 function draw() {
   background(0);
-}
-
-// mousePressed() plays a dog bark at a randomly chosen rate
-function mousePressed() {
-  // Choose a random rate from the array
-  let barkRate = random(rates);
-  // Set the barking sound effect to that rate
-  barkSFX.rate(barkRate);
-  // Play the barking sound effect
-  barkSFX.play();
+  // Display the randomly selected image
+  imageMode(CENTER);
+  image(displayImage, width / 2, height / 2);
 }
