@@ -8,31 +8,21 @@
 
 "use strict";
 
-let music;
-
-function preload() {
-  music = loadSound(`assets/sounds/bark.wav`);
-}
-
-function setup() {
-  createCanvas(500, 500);
-}
-
-function draw() {
-  background(0);
-}
-
-function mousePressed() {
-  tryMusic();
-}
-
-function keyPressed() {
-  tryMusic();
-}
-
-function tryMusic() {
-  // Play music if this is the first interaction
-  if (!music.isPlaying()) {
-    music.loop();
+let circle = {
+    x: 0,
+    y: 0,
+    size: 100
   }
-}
+  
+  function setup() {
+    createCanvas(500, 500);
+  }
+  
+  function draw() {
+    background(0);
+  
+    circle.x = mouseX;
+    circle.y = mouseY; 
+  
+    ellipse(circle.x, circle.y, 100);
+  }
