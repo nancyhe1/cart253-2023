@@ -8,11 +8,13 @@
 
 "use strict";
 
+let barkSFX;
+
 /**
  * Description of preload
 */
 function preload() {
-
+barkSFX = loadSound('assets/sounds/bark.wav');
 }
 
 
@@ -20,7 +22,7 @@ function preload() {
  * Description of setup
 */
 function setup() {
-
+createCanvas(500,500);
 }
 
 
@@ -28,5 +30,9 @@ function setup() {
  * Description of draw()
 */
 function draw() {
+background(0);
+}
 
+function mousePressed() {
+    barkSFX.play();
 }
