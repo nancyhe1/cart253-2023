@@ -8,22 +8,20 @@
 
 "use strict";
 
-let fortunes = [
-    `It's not looking great.`,
-    `You will trip over an apple today.`,
-    `Beware of over-friendly cats.`,
-    `Bank error in your favor, collect $200.`,
-    `Start your Korean skincare regime.`,
-    `You will feel better than 20 years ago.`,
-    `David Lynch will call you on your birthday.`,
-    `Happiness is just around the corner.`,
-    `You will make it look easy today.`,
-    `Your future is cloudy.`
+let soliloquy = [
+    `To be, or not to be`,
+    `That is the question.`,
+    `Whether 'tis nobler in the mind`,
+    `To suffer the slings and arrows`,
+    `Of outrageous fortune`,
+    `Or to take arms`,
+    `Against a sea of sorrows`,
+    `And by opposing end them.`
   ];
   
-  // We need a variable to store the chosen fortune so we can
-  // display it in draw()
-  let chosenFortune = `I am looking into your soul...`;
+  // We need a variable to store the current line we want to display
+  // It should start at ZERO because that's the first index in the array
+  let currentLine = 0;
   
   // setup() gets basic styling ready
   function setup() {
@@ -33,16 +31,24 @@ let fortunes = [
     fill(255);
   }
   
-  // draw() displays the current fortune
+  // draw() displays the current line
   function draw() {
     background(0);
-    text(chosenFortune, width / 2, height / 2);
+    // Get the element in the array at the CURRENT index (starts at 0 and goes up)
+    let dialog = soliloquy[currentLine];
+    // Display the string in that element on the canvas
+    text(dialog, width / 2, height / 2);
   }
   
-  // mousePressed() chooses a random fortune from the fortunes array
+  // mousePressed() moves to the next line in the soliloquy unless we've reached the end
   function mousePressed() {
-    // By passing the fortunes array as an argument to random() we get back
-    // a RANDOM ELEMENT in the array (one of the fortune strings) which we
-    // can then store in the chosenFortune variable for displaying
-    chosenFortune = random(fortunes);
+    // Go to the next line in the soliloquy
+    currentLine = currentLine + 1;
+    // Check if we've reached the LENGTH of the array
+    // If we have, we've gone past the end because we started counting at 0
+    // The LENGTH of our array is 8, but the final element is at index 7
+    if (currentLine === soliloquy.length) {
+      // If we've gone past the end, go back one to the last real element
+      currentLine = soliloquy.length - 1;
+    }
   }
