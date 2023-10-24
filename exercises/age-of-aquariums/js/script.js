@@ -9,18 +9,33 @@
 "use strict";
 
 let school = [];
-let schoolSize = 4;
+let schoolSize = 20;
+let bg;
+let fishImage;
+let time = 30;
+
+let duck = {
+  x:300,
+  y:300,
+  vx: 1,
+  vy: 1,
+  size: 50,
+  speed: 2,
+  image: undefined,
+}
+let state = 'title'; // can be: title, simulation, gameover, win
 
 function setup() {
   createCanvas(600, 600);
+  imageMode(CENTER);
+  duck.image = loadImage("assets/images/duck.png");
+  fishImage = loadImage("assets/images/fish.png");
 
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
-    school.push(fish);
   }
 }
 
-// createFish(x,y)
 // Creates a new JavaScript Object describing a fish and returns it
 function createFish(x, y) {
   let fish = {
@@ -29,7 +44,8 @@ function createFish(x, y) {
     size: 50,
     vx: 0,
     vy: 0,
-    speed: 2
+    speed: 2,
+    eaten: false,
   };
   return fish;
 }
@@ -37,15 +53,69 @@ function createFish(x, y) {
 // draw()
 // Moves and displays our fish
 function draw() {
-  background(0);
+  background(147, 219, 245);
+  
+  if (state === 'title') {
+    title();
+    }
+    else if (state === 'simulation') {
+        simulation();
+    }
+    else if (state === 'gameover') {
+      gameover();
+    }
+    else if (state === 'win') {
+      win();
+    }
+  
+  }
 
+  function title() {
+    push();
+    textSize(30);
+    fill(0);
+    textWrap(WORD);
+    textAlign(CENTER,CENTER);
+    text('Hungry lil duck', width/2, height/2);
+    textSize(20);
+    text('Use your mouse to move around and eat all the fishes before the time runs out', 180, height/2 + 30, 250)
+    text('Click to start!', width/2, height/2 + 130);
+    pop();
+}
+function simulation() {
+  push();
+  textSize(30)
+  fill(0);
+  text(`Timer: ${time}`, 20,30);
+  pop();
+  timer();
+  
   for (let i = 0; i < school.length; i++) {
     moveFish(school[i]);
     displayFish(school[i]);
   }
+  duckControls();
+  displayDuck();
+}
+function gameover() {
+  background(0)
+  push();
+  textSize(30)
+  textAlign(CENTER,CENTER);
+  fill(255);
+  text('You lost ;((', width/2, height/2);
+  pop();
+}
+function win() {
+  background(250, 250, 202);
+  push();
+  textSize(30)
+  textAlign(CENTER,CENTER);
+  fill(0);
+  text('The lil duck is full now! :)) ', width/2, height/2);
+  pop();
 }
 
-// moveFish(fish)
 // Chooses whether the provided fish changes direction and moves it
 function moveFish(fish) {
   // Choose whether to change direction
@@ -54,27 +124,49 @@ function moveFish(fish) {
     fish.vx = random(-fish.speed, fish.speed);
     fish.vy = random(-fish.speed, fish.speed);
   }
-
+  
   // Move the fish
   fish.x = fish.x + fish.vx;
   fish.y = fish.y + fish.vy;
-
+  
   // Constrain the fish to the canvas
   fish.x = constrain(fish.x, 0, width);
   fish.y = constrain(fish.y, 0, height);
 }
 
-// displayFish(fish)
+// displayfish(fish)
 // Displays the provided fish on the canvas
 function displayFish(fish) {
-  push();
-  fill(200, 100, 100);
-  noStroke();
-  ellipse(fish.x, fish.y, fish.size);
+  if (!fish.eaten) {
+    push();
+  image(fishImage, fish.x, fish.y, fish.size, fish.size);
   pop();
+  }
+  
 }
 
+
+
+//making the duck follow the mouse
+function duckControls() {
+  
+  duck.x = mouseX;
+  duck.y = mouseY;
+  
+  // Update the duck's position based on velocity
+  duck.vx = duck.x + duck.vx;
+  duck.vy = duck.y + duck.vy;
+}
+
+//displaying the duck
+function displayDuck() {
+image(duck.image, duck.x, duck.y, duck.size, duck.size);
+}
+
+
+//use mouse press to start the simulation
 function mousePressed() {
-    let fish = createFish(mouseX,mouseY); // Create a fish at the mouse position
-    school.push(fish);
+  if (state === 'title') {
+      state = 'simulation';
+  }
 }
