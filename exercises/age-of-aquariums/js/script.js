@@ -7,7 +7,7 @@
  */
 
 "use strict";
-
+//state the variables
 let school = [];
 let schoolSize = 20;
 let bg;
@@ -96,6 +96,7 @@ function simulation() {
   }
   duckControls();
   displayDuck();
+  checkOverlap();
 }
 function gameover() {
   background(0)
@@ -145,7 +146,29 @@ function displayFish(fish) {
   
 }
 
-
+function checkOverlap(fish) {
+  for (let i = 0; i < school.length; i++) {
+    let fish = school[i];
+    
+    if (!fish.eaten) {
+      let d = dist(duck.x, duck.y, fish.x, fish.y);
+      if (d < duck.size/2 + fish.size/2) {
+        fish.eaten = true;
+      }
+    }
+  }
+  // Check if all fish are eaten
+  let allEaten = true;
+  for (let i = 0; i < school.length; i++) {
+    if (!school[i].eaten) {
+      allEaten = false;
+      break;
+    }
+  }
+  if (allEaten) {
+    state = 'win';
+  }
+}
 
 //making the duck follow the mouse
 function duckControls() {
@@ -163,6 +186,15 @@ function displayDuck() {
 image(duck.image, duck.x, duck.y, duck.size, duck.size);
 }
 
+// adding a time limit
+function timer() {
+  if (frameCount % 60 == 0 && time > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+    time --;
+  }
+  if (time == 0) {
+    state = 'gameover';
+  }
+}
 
 //use mouse press to start the simulation
 function mousePressed() {
