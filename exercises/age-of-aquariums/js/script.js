@@ -8,7 +8,7 @@
 "use strict";
 //state the variables
 let school = [];
-let schoolSize = 20;
+let schoolSize = 25;
 let bg;
 let fishImage;
 let time = 30;
@@ -46,7 +46,7 @@ function createFish(x, y) {
     size: 50,
     vx: 0,
     vy: 0,
-    speed: 2,
+    speed: 3.5,
     eaten: false,
   };
   return fish;
