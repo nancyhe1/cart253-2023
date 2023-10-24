@@ -1,9 +1,8 @@
 /**
- * Title of Project
+ * Age of Aquariums
  * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * this is a simple simulation of a duck eating fish using the mouse.
  */
 
 "use strict";
@@ -27,10 +26,13 @@ let state = 'title'; // can be: title, simulation, gameover, win
 
 function setup() {
   createCanvas(600, 600);
+
+  // loading the images
   imageMode(CENTER);
   duck.image = loadImage("assets/images/duck.png");
   fishImage = loadImage("assets/images/fish.png");
 
+  //setting up the fish at random positions
   for (let i = 0; i < schoolSize; i++) {
     school[i] = createFish(random(0, width), random(0, height));
   }
@@ -70,7 +72,8 @@ function draw() {
   
   }
 
-  function title() {
+// display title screen
+function title() {
     push();
     textSize(30);
     fill(0);
@@ -78,26 +81,33 @@ function draw() {
     textAlign(CENTER,CENTER);
     text('Hungry lil duck', width/2, height/2);
     textSize(20);
-    text('Use your mouse to move around and eat all the fishes before the time runs out', 180, height/2 + 30, 250)
+    text('Use your mouse to move around and eat all the fish before the time runs out', 180, height/2 + 30, 250)
     text('Click to start!', width/2, height/2 + 130);
     pop();
 }
+
+//display simulation
 function simulation() {
+  // displaying the timer
   push();
   textSize(30)
   fill(0);
   text(`Timer: ${time}`, 20,30);
   pop();
   timer();
-  
+  //the fish
   for (let i = 0; i < school.length; i++) {
     moveFish(school[i]);
     displayFish(school[i]);
   }
+  //the duck
   duckControls();
   displayDuck();
+
   checkOverlap();
 }
+
+//displaying gameover screen
 function gameover() {
   background(0)
   push();
@@ -107,6 +117,8 @@ function gameover() {
   text('You lost ;((', width/2, height/2);
   pop();
 }
+
+//displaying winning screen
 function win() {
   background(250, 250, 202);
   push();
@@ -135,18 +147,17 @@ function moveFish(fish) {
   fish.y = constrain(fish.y, 0, height);
 }
 
-// displayfish(fish)
 // Displays the provided fish on the canvas
 function displayFish(fish) {
   if (!fish.eaten) {
     push();
   image(fishImage, fish.x, fish.y, fish.size, fish.size);
   pop();
-  }
-  
+  } 
 }
 
-function checkOverlap(fish) {
+// checking if the fish and duck overlap, if so then the fish disappears
+function checkOverlap() {
   for (let i = 0; i < school.length; i++) {
     let fish = school[i];
     
@@ -157,6 +168,7 @@ function checkOverlap(fish) {
       }
     }
   }
+
   // Check if all fish are eaten
   let allEaten = true;
   for (let i = 0; i < school.length; i++) {
@@ -165,6 +177,7 @@ function checkOverlap(fish) {
       break;
     }
   }
+  //if all eaten then the player wins
   if (allEaten) {
     state = 'win';
   }
@@ -191,6 +204,7 @@ function timer() {
   if (frameCount % 60 == 0 && time > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
     time --;
   }
+  //when the time runs out, the game is over
   if (time == 0) {
     state = 'gameover';
   }
