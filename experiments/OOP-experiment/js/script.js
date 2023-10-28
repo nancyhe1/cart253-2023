@@ -28,14 +28,24 @@ function setup() {
   
     // Create our flowers by counting up to the number of the flowers
     for (let i = 0; i < garden.numFlowers; i++) {
-      // Create a new flower
-      let flower = new Flower();
+      // Create variables for our arguments for clarity
+      let x = random(0, width);
+      let y = random(0, height);
+      let size = random(50, 80);
+      let stemLength = random(50, 100);
+      let petalColor = {
+        r: random(100, 255),
+        g: random(100, 255),
+        b: random(100, 255)
+      }
+      // Create a new flower using the arguments
+      let flower = new Flower(x, y, size, stemLength, petalColor);
       // Add the flower to the array of flowers
       garden.flowers.push(flower);
     }
   }
 
-  // draw()
+// draw()
 // Displays our flowers
 function draw() {
     // Display the grass
