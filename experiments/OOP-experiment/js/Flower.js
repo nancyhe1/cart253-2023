@@ -20,8 +20,18 @@ constructor(x,y,size,stemLength,petalColor) {
       g: 0,
       b: 0
     };
+    this.alive = true;
   }
 
+  shrink() {
+    let shrinkage = random(0,0.1);
+    this.size = this.size - shrinkage;
+    this.petalThickness = this.petalThickness - shrinkage/10;
+
+    if (this.size <= 0 || this.petalThickness <= 0) {
+      this.alive = false;
+    }
+  }
 // display()
   // Displays the flower on the canvas
   display() {
@@ -37,5 +47,18 @@ constructor(x,y,size,stemLength,petalColor) {
     stroke(this.petalColor.r, this.petalColor.g, this.petalColor.b);
     ellipse(this.x, this.y, this.size);
     pop();
+  }
+
+  mousePressed() {
+    // Calculate the distance between this flower and the mouse
+    let d = dist(this.x,this.y,mouseX,mouseY);
+    // Check if the distance is less than the head of the flower
+    if (d < this.size/2 + this.petalThickness) {
+      // If it is, this flower was clicked, so increase its stem length
+      this.stemLength = this.stemLength + 5;
+      // And also change its y position so it grows upward! (If we didn't do this
+      // the then stem would grow downward, which would look weird.)
+      this.y = this.y - 5;
+    }
   }
 }
