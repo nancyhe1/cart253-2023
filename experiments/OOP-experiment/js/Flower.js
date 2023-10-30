@@ -1,13 +1,16 @@
 class Flower {
-    // The constructor() sets up a flower's properties
-constructor(x,y,size,stemLength,petalColor) {
+
+  // The constructor() sets up a flower's properties
+  constructor(x, y, size, stemLength, petalColor) {
     // Position and size information
     this.x = x;
     this.y = y;
     this.size = size;
+    this.maxSize = size; // NEW! To limit growth
     this.stemLength = stemLength;
     this.stemThickness = 10;
     this.petalThickness = 10;
+    this.maxPetalThickness = 10; // NEW! To limit growth
     // Color information
     this.stemColor = {
       r: 50,
@@ -23,16 +26,37 @@ constructor(x,y,size,stemLength,petalColor) {
     this.alive = true;
   }
 
+  // shrink()
+  // Shrinks the flower
   shrink() {
-    let shrinkage = random(0,0.1);
+    // Choose a random amount to shrink
+    let shrinkage = random(0, 0.1);
+    // Reduce the petal thickness (divide by 10 to make it less rapid)
+    this.petalThickness = this.petalThickness - shrinkage / 10;
+    // Reduce the centre of the flower
     this.size = this.size - shrinkage;
-    this.petalThickness = this.petalThickness - shrinkage/10;
 
-    if (this.size <= 0 || this.petalThickness <= 0) {
+    // If any of the key properties reach 0 or less, the flower is dead
+    if (this.petalThickness <= 0 || this.size <= 0) {
       this.alive = false;
     }
   }
-// display()
+
+  // NEW! pollinate() handles the flower being pollinated (it grows)
+  pollinate() {
+    // Choose a random amount to grow
+    let growth = random(0, 0.5);
+    // Increase the petal thickness (divide by 10 to make it less rapid)
+    this.petalThickness = this.petalThickness + growth / 10;
+    // Increase the centre of the flower
+    this.size = this.size + growth;
+
+    // Constrain the elements
+    this.petalThickness = constrain(this.petalThickness, 0, this.maxPetalThickness);
+    this.size = constrain(this.size, 0, this.maxSize);
+  }
+
+  // display()
   // Displays the flower on the canvas
   display() {
     push();
@@ -47,18 +71,5 @@ constructor(x,y,size,stemLength,petalColor) {
     stroke(this.petalColor.r, this.petalColor.g, this.petalColor.b);
     ellipse(this.x, this.y, this.size);
     pop();
-  }
-
-  mousePressed() {
-    // Calculate the distance between this flower and the mouse
-    let d = dist(this.x,this.y,mouseX,mouseY);
-    // Check if the distance is less than the head of the flower
-    if (d < this.size/2 + this.petalThickness) {
-      // If it is, this flower was clicked, so increase its stem length
-      this.stemLength = this.stemLength + 5;
-      // And also change its y position so it grows upward! (If we didn't do this
-      // the then stem would grow downward, which would look weird.)
-      this.y = this.y - 5;
-    }
   }
 }
