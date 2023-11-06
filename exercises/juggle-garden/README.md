@@ -1,3 +1,3 @@
-# Template p5 project
+# Juggle-Garden
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+I tried to make another garden simulator where you could add new flowers by clicking. i will do better for my next exercise.
