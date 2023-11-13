@@ -8,29 +8,39 @@
 
 "use strict";
 
-let oscillator; 
-let t = 0; 
-let tIncrease = 0.075; 
+let synth;
+let notes = [`F4`, `G4`, `Ab4`, `Bb4`, `C4`, `Db4`, `Eb4`, `F5`];
+let currentNote = 0;
+let interval;
 
 function setup() {
   createCanvas(600, 600);
   userStartAudio();
 
-  oscillator = new p5.Oscillator(0, `sine`);
-  oscillator.amp(0.25);
+  synth = new p5.PolySynth();
 }
 
 function draw() {
   background(0);
-
-  let perlinValue = noise(t);
-  let newFreq = map(perlinValue, 0, 1, 110, 880);
-  oscillator.freq(newFreq);
-  t += tIncrease;
-
 }
 
-
+// mousePressed() starts and stops our piano playing
 function mousePressed() {
-  oscillator.start();
+  if (interval === undefined) {
+    interval = setInterval(playNextNote, 500);
+  }
+  else {
+    clearInterval(interval);
+    interval = undefined;
+  }
+}
+
+// playNextNote() plays the next note in our array
+function playNextNote() {
+  let note = notes[currentNote];
+  synth.play(note, 0.2, 0, 0.4);
+  currentNote = currentNote + 1;
+  if (currentNote === notes.length) {
+    currentNote = 0;
+  }
 }
