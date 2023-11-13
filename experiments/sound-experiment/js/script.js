@@ -8,46 +8,29 @@
 
 "use strict";
 
-let barkSFX;
-// Whether to display "BARK!"
-let showBarkText = false;
-
-function preload() {
-  barkSFX = loadSound(`assets/sounds/bark.wav`);
-}
+let oscillator; 
+let t = 0; 
+let tIncrease = 0.075; 
 
 function setup() {
   createCanvas(600, 600);
   userStartAudio();
 
-  // Add cues to our sound at specific times (in seconds)
-  barkSFX.addCue(0.1, showBark);
-  barkSFX.addCue(0.3, hideBark);
-  barkSFX.addCue(0.4, showBark);
-  barkSFX.addCue(0.7, hideBark);
+  oscillator = new p5.Oscillator(0, `sine`);
+  oscillator.amp(0.25);
 }
 
 function draw() {
   background(0);
 
-  if (showBarkText) {
-    push();
-    fill(255);
-    textSize(64);
-    textAlign(CENTER, CENTER);
-    text(`BARK!`, width / 2, height / 2);
-    pop();
-  }
+  let perlinValue = noise(t);
+  let newFreq = map(perlinValue, 0, 1, 110, 880);
+  oscillator.freq(newFreq);
+  t += tIncrease;
+
 }
 
-function showBark() {
-  showBarkText = true;
-}
-
-function hideBark() {
-  showBarkText = false;
-}
 
 function mousePressed() {
-  barkSFX.play();
+  oscillator.start();
 }
