@@ -1,4 +1,4 @@
-class Pet {
+class Clue {
     constructor(x,y) {
         this.x = x;
         this.y = y;
