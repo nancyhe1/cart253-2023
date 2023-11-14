@@ -9,6 +9,8 @@
 "use strict";
 
 let balls = [];
+//G major
+let notes = [`G`, `A`, `B`, `C`, `D`, `E`, `F#`, `G`];
 
 /**
  * Description of preload
@@ -46,6 +48,7 @@ function mousePressed() {
 }
 
 function createBall(x,y) {
-    let ball = new Ball(x,y);
+    let note = random(notes);
+    let ball = new Ball(x,y,note);
     balls.push(ball);
 }
