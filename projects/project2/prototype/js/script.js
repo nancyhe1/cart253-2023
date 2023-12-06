@@ -13,8 +13,10 @@ let bg;
 let player = {
     x: 0,
     y: 0,
-    speed: 1,
     size:100,
+    vx: 0,
+    vy: 0,
+    speed:5,
 };
 
 
@@ -30,7 +32,9 @@ function preload() {
  * Description of setup
 */
 function setup() {
-createCanvas(800,500);
+createCanvas(windowWidth, windowHeight);
+player.x = windowWidth/2;
+player.y = windowHeight/2;
 
 
 }
@@ -51,7 +55,7 @@ function draw() {
 function title() {
    push();
    background(140, 119, 118);
-    textSize(30);
+   textSize(30);
     fill(0);
     textWrap(WORD);
     textAlign(CENTER,CENTER);
@@ -62,16 +66,53 @@ function title() {
     pop();
 }
 
-function mousePressed() {
-  if (state === 'title') {
-      state = 'simulation';
-  }
-}
-
 function simulation() {
-
+    background(0);
+    display();
+    playerControls();
+    move();
 }
 
 function display() {
     ellipse(player.x, player.y, player.size);
+}
+
+function playerControls() {
+    if (keyIsDown(LEFT_ARROW)) {
+        player.vx = -player.speed;
+      }
+      else if (keyIsDown(RIGHT_ARROW)) {
+        
+        player.vx = player.speed;
+      }
+      else {
+        player.vx = 0;
+      }
+      if (keyIsDown(UP_ARROW)) {
+        player.vy = -player.speed;
+      }
+      else if (keyIsDown(DOWN_ARROW)) {
+        player.vy = player.speed;
+      }
+      else {
+        player.vy = 0;
+      }
+
+      //to make it move
+      player.x = player.x + player.vx;
+      player.y = player.y + player.vy;
+
+      //constrain it within the canvas
+      player.x = constrain(player.x, 0, width);
+      player.y = constrain(player.y, 0, height);
+    }
+
+
+function move() {
+}
+
+function mousePressed() {
+    if (state === 'title') {
+      state = 'simulation';
+    }
 }
