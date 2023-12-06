@@ -10,15 +10,19 @@
 
 let state = `title`; //Can be title, living room, bedroom, end
 let bg;
-let bg2;
+let player = {
+    x: 0,
+    y: 0,
+    speed: 1,
+    size:100,
+};
 
 
 /**
  * Description of preload
 */
 function preload() {
-bg = loadImage("assets/images/messy room.jpg"); 
-bg2 = loadImage("assets/images/living-room.jpg");
+
 }
 
 
@@ -26,7 +30,7 @@ bg2 = loadImage("assets/images/living-room.jpg");
  * Description of setup
 */
 function setup() {
-createCanvas(windowWidth, windowHeight);
+createCanvas(800,500);
 
 
 }
@@ -39,11 +43,8 @@ function draw() {
     if (state === `title`) {
         title();
     }
-    else if (state === `room1`) {
-        room1();
-    }
-    else if (state === `room2`) {
-        room2();
+    else if (state === `simulation`) {
+        simulation();
     }
 }
 
@@ -54,31 +55,23 @@ function title() {
     fill(0);
     textWrap(WORD);
     textAlign(CENTER,CENTER);
-    text(`murder mystery `, width/2, height/2);
+    text(`dodge`, width/2, height/2);
     textSize(20);
-    text('Use your mouse to change between the rooms', width/2, height/2 + 30, 250)
+    text(`use the arrows to move around and dogde the obstacles`, width/2, height/2 + 30, 250)
     text('Click to start!', width/2, height/2 + 130);
     pop();
-}
-function room1() {
-    background(bg);
-}
-
-function room2() {
-    background(bg2);
 }
 
 function mousePressed() {
   if (state === 'title') {
-      state = 'room1';
+      state = 'simulation';
   }
 }
 
-function keyPressed() {
-    if (keyCode == LEFT_ARROW) {
-        state = 'room1';
-    }
-    else if (keyCode == RIGHT_ARROW) {
-        state = 'room2';
-    }
+function simulation() {
+
+}
+
+function display() {
+    ellipse(player.x, player.y, player.size);
 }
