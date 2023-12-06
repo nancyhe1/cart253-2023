@@ -19,6 +19,17 @@ let player = {
     speed:5,
 };
 
+let shooter = {
+    x: 0,
+    y: 0,
+    size:100,
+    vx: 0,
+    vy: 0,
+    speed:5, 
+};
+
+let bullets = [];
+let numBullets = 5;
 
 /**
  * Description of preload
@@ -32,10 +43,16 @@ function preload() {
  * Description of setup
 */
 function setup() {
-createCanvas(windowWidth, windowHeight);
-player.x = windowWidth/2;
-player.y = windowHeight/2;
+    createCanvas(windowWidth, windowHeight);
+    player.x = windowWidth/2;
+    player.y = windowHeight/2;
 
+    for (let i = 0; i < numBullets; i++) {
+        let x = random(0, width);
+        let y = random(0, height);
+        let bullet = new Bullet(x, y);
+        bullets.push(bullet);
+    }
 
 }
 
@@ -70,11 +87,18 @@ function simulation() {
     background(0);
     display();
     playerControls();
-    move();
+
+    for (let i = 0; i < numBullets; i++) {
+        let bullet = bullets[i];
+        bullet.move();
+        bullet.display();
+    }
 }
 
 function display() {
+    fill(201, 168, 240);
     ellipse(player.x, player.y, player.size);
+    //ellipse(shooter.x, shooter.y, shooter.size);
 }
 
 function playerControls() {
@@ -105,10 +129,7 @@ function playerControls() {
       //constrain it within the canvas
       player.x = constrain(player.x, 0, width);
       player.y = constrain(player.y, 0, height);
-    }
 
-
-function move() {
 }
 
 function mousePressed() {
