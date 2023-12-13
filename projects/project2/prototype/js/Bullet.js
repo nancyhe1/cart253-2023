@@ -13,9 +13,7 @@ class Bullet {
         //this.vx += this.speed;
         this.vy += this.speed;
         // Update position with velocity to actually move
-        this.x = this.x + this.vx;
         this.y = this.y + this.vy;
-        //making them restart to the beginning
     }
 
     display() {

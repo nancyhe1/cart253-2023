@@ -10,11 +10,14 @@
 let state = `title`; //Can be title, living room, bedroom, end
 let bg;
 let player;
-let spawnTimer = 2000;
+// the good objects
 let goods = [];
 let numGood = 10;
+let goodCounter = 0;
+//the bad objects
 let bullets = [];
 let numBullets = 10;
+let bulletCounter = 0;
 
 /**
  * Description of preload
@@ -31,22 +34,7 @@ function preload() {
 function setup() {
     createCanvas(1000, 600);
     player = new Player(width/2,height*4/5-20);
-    for (let i = 0; i < numBullets; i++) {
-        let x = random(0, width);
-        let y = random(-100, -20);
-        let speed = random(0.25,1);
-        let bullet = new Bullet(x, y, speed);
-        bullets.push(bullet);
-    }
-    // for the positive objects
-    for (let i = 0; i < numGood; i++) {
-        let x = random(0, width);
-        let y = random(-100, -20);
-        let speed = random(0.25,1);
-        let good = new Positive(x, y, speed);
-        goods.push(good);
-    }
-
+    
 }
 
 
@@ -86,15 +74,19 @@ function simulation() {
     player.x = constrain(player.x, 0, width);
     player.display();
 // for the bad objects
-    for (let i = 0; i < numBullets; i++) {
-        let bullet = bullets[i];
+    if (random(1) < 0.1) {
+        bullets.push(new Bullet(random(width), random(-100,-20), random(0.05, 1)))
+    }
+    for (let bullet of bullets) {
         bullet.move();
         bullet.display();
         bullet.checkOverlap();
     }
 //for the good objects
-    for (let i = 0; i < numGood; i++) {
-        let good = goods[i];
+    if (random(1) < 0.1) {
+        goods.push(new Positive(random(width), random(-100,-20), random(0.05, 1)))
+    }
+    for (let good of goods) {
         good.move();
         good.display();
         good.checkOverlap();
@@ -103,7 +95,7 @@ function simulation() {
 
 function gameover() {
     push();
-    background(255,0,0,70);
+    background(150,150,150,10);
     textSize(30);
     fill(0);
     textWrap(WORD);
@@ -111,7 +103,7 @@ function gameover() {
     text(`GAME OVER`, width/2, height/2);
     textSize(20);
     textAlign(CENTER,CENTER);
-    text(`something to restart`, width/2, height/2 + 30, 250)
+    text(`You caught too many bad emotions T^T`, width/2, height/2 + 30)
     pop();
 }
 
