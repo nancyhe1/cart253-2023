@@ -2,40 +2,26 @@
  * project 2
  * Nancy He
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * this is a cute little dodging game, you will have to catch some positive energy items and avoid the negative objects
  */
 
 "use strict";
 
 let state = `title`; //Can be title, living room, bedroom, end
 let bg;
-let player = {
-    x: 0,
-    y: 0,
-    size:100,
-    vx: 0,
-    vy: 0,
-    speed:5,
-};
-
-let shooter = {
-    x: 0,
-    y: 0,
-    size:100,
-    vx: 0,
-    vy: 0,
-    speed:5, 
-};
-
+let player;
+let spawnTimer = 2000;
+let goods = [];
+let numGood = 10;
 let bullets = [];
-let numBullets = 5;
+let numBullets = 10;
 
 /**
  * Description of preload
 */
 function preload() {
-
+    bg = loadImage("assets/images/background-sky.png");
+    Player.loadImage();
 }
 
 
@@ -43,15 +29,22 @@ function preload() {
  * Description of setup
 */
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    player.x = windowWidth/2;
-    player.y = windowHeight/2;
-
+    createCanvas(1000, 600);
+    player = new Player(width/2,height*4/5-20);
     for (let i = 0; i < numBullets; i++) {
         let x = random(0, width);
-        let y = random(0, height);
-        let bullet = new Bullet(x, y);
+        let y = random(-100, -20);
+        let speed = random(0.25,1);
+        let bullet = new Bullet(x, y, speed);
         bullets.push(bullet);
+    }
+    // for the positive objects
+    for (let i = 0; i < numGood; i++) {
+        let x = random(0, width);
+        let y = random(-100, -20);
+        let speed = random(0.25,1);
+        let good = new Positive(x, y, speed);
+        goods.push(good);
     }
 
 }
@@ -67,6 +60,9 @@ function draw() {
     else if (state === `simulation`) {
         simulation();
     }
+    else if (state === `gameover`) {
+        gameover();
+    }
 }
 
 function title() {
@@ -77,59 +73,46 @@ function title() {
     textWrap(WORD);
     textAlign(CENTER,CENTER);
     text(`dodge`, width/2, height/2);
+    textAlign(CENTER,CENTER);
     textSize(20);
-    text(`use the arrows to move around and dogde the obstacles`, width/2, height/2 + 30, 250)
+    text(`Use the arrows to move around and dogde the obstacles`, width/2, height/2 + 30)
     text('Click to start!', width/2, height/2 + 130);
     pop();
 }
 
 function simulation() {
-    background(0);
-    display();
-    playerControls();
-
+    background(bg);
+    player.x = mouseX;
+    player.x = constrain(player.x, 0, width);
+    player.display();
+// for the bad objects
     for (let i = 0; i < numBullets; i++) {
         let bullet = bullets[i];
         bullet.move();
         bullet.display();
+        bullet.checkOverlap();
+    }
+//for the good objects
+    for (let i = 0; i < numGood; i++) {
+        let good = goods[i];
+        good.move();
+        good.display();
+        good.checkOverlap();
     }
 }
 
-function display() {
-    fill(201, 168, 240);
-    ellipse(player.x, player.y, player.size);
-    //ellipse(shooter.x, shooter.y, shooter.size);
-}
-
-function playerControls() {
-    if (keyIsDown(LEFT_ARROW)) {
-        player.vx = -player.speed;
-      }
-      else if (keyIsDown(RIGHT_ARROW)) {
-        
-        player.vx = player.speed;
-      }
-      else {
-        player.vx = 0;
-      }
-      if (keyIsDown(UP_ARROW)) {
-        player.vy = -player.speed;
-      }
-      else if (keyIsDown(DOWN_ARROW)) {
-        player.vy = player.speed;
-      }
-      else {
-        player.vy = 0;
-      }
-
-      //to make it move
-      player.x = player.x + player.vx;
-      player.y = player.y + player.vy;
-
-      //constrain it within the canvas
-      player.x = constrain(player.x, 0, width);
-      player.y = constrain(player.y, 0, height);
-
+function gameover() {
+    push();
+    background(255,0,0,70);
+    textSize(30);
+    fill(0);
+    textWrap(WORD);
+    textAlign(CENTER,CENTER);
+    text(`GAME OVER`, width/2, height/2);
+    textSize(20);
+    textAlign(CENTER,CENTER);
+    text(`something to restart`, width/2, height/2 + 30, 250)
+    pop();
 }
 
 function mousePressed() {

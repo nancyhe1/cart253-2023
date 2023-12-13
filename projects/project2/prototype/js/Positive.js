@@ -1,4 +1,4 @@
-class Bullet {
+class Positive {
     constructor(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -19,7 +19,7 @@ class Bullet {
     }
 
     display() {
-        fill(252,0,0);
+        fill(252, 186, 3);
         ellipse(this.x, this.y, this.size);
     }
 
@@ -29,5 +29,4 @@ class Bullet {
              state = 'gameover';
          }    
     }
-
 }
