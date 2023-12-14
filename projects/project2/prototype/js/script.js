@@ -68,18 +68,20 @@ function title() {
     fill(0);
     textWrap(WORD);
     textAlign(CENTER,CENTER);
-    text(`dodge`, width/2, height/2);
+    text(`Catching feelings`, width/2, height/2);
     textAlign(CENTER,CENTER);
     textSize(20);
-    text(`Use the mouse to move around and dodge the obstacles and catch good emotions`, width/2, height/2 + 30)
+    text(`Use the mouse to move around and avoid the sad emotions and catch good emotions`, width/2, height/2 + 30)
     text('Click to start!', width/2, height/2 + 130);
     pop();
 }
 
 function simulation() {
     background(179, 245, 255); //i dont know why i can load my background image soa solid color will do
-    text("😁: "+(happyCounter)+"", 18, 20);
-    text("😭: "+(bulletCounter)+"", 18, 50);
+    textSize(30);
+    text("😁: "+(happyCounter)+"", 18, 40);
+    text("😭: "+(bulletCounter)+"", 18, 75);
+    lose();
 
     player.x = mouseX;
     player.x = constrain(player.x, 0, width);
@@ -130,6 +132,12 @@ function HappycheckOverlap() {
     }
 }
 
+function lose() {
+    if (bulletCounter > 5) {
+        state = "gameover";
+    }
+}
+
 function gameover() {
     push();
     background(150,150,150,10);
@@ -141,11 +149,15 @@ function gameover() {
     textSize(20);
     textAlign(CENTER,CENTER);
     text(`You caught too many bad emotions T^T`, width/2, height/2 + 30)
+    text(`Click to restart`, width/2, height/2 + 60);
     pop();
 }
 
 function mousePressed() {
     if (state === 'title') {
       state = 'simulation';
+    }
+    if (state === 'gameover') {
+        location.reload();
     }
 }
