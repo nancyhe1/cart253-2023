@@ -5,6 +5,7 @@ class Bullet {
         this.size = 50;
         this.vx = 0;
         this.vy = 0;
+        this.image = random(sadImage);
         this.speed = speed;
         this.alive = true;
     }
@@ -17,8 +18,8 @@ class Bullet {
     }
 
     display() {
-        fill(252,0,0);
-        ellipse(this.x, this.y, this.size);
+        imageMode(CENTER);
+        image(this.image, this.x, this.y, this.size, this.size); 
     }
 
     checkOverlap() {

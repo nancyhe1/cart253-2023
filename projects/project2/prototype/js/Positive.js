@@ -5,6 +5,7 @@ class Positive {
         this.size = 50;
         this.vx = 0;
         this.vy = 0;
+        this.image = random(happyImage);
         this.speed = speed;
         this.alive = true;
     }
@@ -19,8 +20,8 @@ class Positive {
     }
 
     display() {
-        fill(252, 186, 3);
-        ellipse(this.x, this.y, this.size);
+        imageMode(CENTER);
+        image(this.image, this.x, this.y, this.size, this.size);
     }
 
     checkOverlap() {

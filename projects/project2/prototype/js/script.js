@@ -11,12 +11,12 @@ let state = `title`; //Can be title, living room, bedroom, end
 let bg;
 let player;
 // the good objects
-let goods = [];
-let numGood = 10;
+let happys = [];
+let happyImage = [];
 let goodCounter = 0;
 //the bad objects
 let bullets = [];
-let numBullets = 10;
+let sadImage = [];
 let bulletCounter = 0;
 
 /**
@@ -25,6 +25,14 @@ let bulletCounter = 0;
 function preload() {
     bg = loadImage("assets/images/background-sky.png");
     Player.loadImage();
+    //loading happy images
+    for (let i=0; i < 3; i++) {
+        happyImage[i] = loadImage("assets/images/happy_"+i+".png");
+    }
+    //loading the sad images
+    for (let i=0; i < 2; i++) {
+        sadImage[i] = loadImage("assets/images/sad_"+i+".png");
+    }  
 }
 
 
@@ -63,7 +71,7 @@ function title() {
     text(`dodge`, width/2, height/2);
     textAlign(CENTER,CENTER);
     textSize(20);
-    text(`Use the arrows to move around and dogde the obstacles`, width/2, height/2 + 30)
+    text(`Use the mouse to move around and dodge the obstacles and catch good emotions`, width/2, height/2 + 30)
     text('Click to start!', width/2, height/2 + 130);
     pop();
 }
@@ -73,6 +81,7 @@ function simulation() {
     player.x = mouseX;
     player.x = constrain(player.x, 0, width);
     player.display();
+
 // for the bad objects
     if (random(1) < 0.1) {
         bullets.push(new Bullet(random(width), random(-100,-20), random(0.05, 1)))
@@ -84,12 +93,12 @@ function simulation() {
     }
 //for the good objects
     if (random(1) < 0.1) {
-        goods.push(new Positive(random(width), random(-100,-20), random(0.05, 1)))
+        happys.push(new Positive(random(width), random(-100,-20), random(0.05, 1)))
     }
-    for (let good of goods) {
-        good.move();
-        good.display();
-        good.checkOverlap();
+    for (let happy of happys) {
+        happy.move();
+        happy.display();
+        happy.checkOverlap();
     }
 }
 
