@@ -13,7 +13,7 @@ let player;
 // the good objects
 let happys = [];
 let happyImage = [];
-let goodCounter = 0;
+let happyCounter = 0;
 //the bad objects
 let bullets = [];
 let sadImage = [];
@@ -77,19 +77,21 @@ function title() {
 }
 
 function simulation() {
-    background(bg);
+    background(179, 245, 255); //i dont know why i can load my background image soa solid color will do
+    text("😁: "+(happyCounter)+"", 18, 20);
+    text("😭: "+(bulletCounter)+"", 18, 50);
+
     player.x = mouseX;
     player.x = constrain(player.x, 0, width);
     player.display();
-
-// for the bad objects
+    // for the bad objects
     if (random(1) < 0.1) {
         bullets.push(new Bullet(random(width), random(-100,-20), random(0.05, 1)))
     }
     for (let bullet of bullets) {
         bullet.move();
-        bullet.display();
-        bullet.checkOverlap();
+        bullet.display(); 
+        BulletcheckOverlap(); 
     }
 //for the good objects
     if (random(1) < 0.1) {
@@ -98,7 +100,33 @@ function simulation() {
     for (let happy of happys) {
         happy.move();
         happy.display();
-        happy.checkOverlap();
+        HappycheckOverlap();
+    }
+}
+
+function BulletcheckOverlap() {
+    for (let i = bullets.length - 1; i >=0; i--) {
+        if (player.checkOverlapBullet(bullets[i])) {
+            bulletCounter++;
+            bullets.splice(i, 1);
+        }
+         else if (bullets[i].y > height + bullets[i].size) {
+            console.log("gone")
+            bullets.splice(i, 1);
+         }   
+    }
+}
+
+function HappycheckOverlap() {
+    for (let i = happys.length - 1; i >=0; i--) {
+        if (player.checkOverlapHappy(happys[i])) {
+            happyCounter++;
+            happys.splice(i, 1);
+        }
+         else if (happys[i].y > height + happys[i].size) {
+            console.log("gone")
+            happys.splice(i, 1);
+         }   
     }
 }
 

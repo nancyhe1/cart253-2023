@@ -24,10 +24,14 @@ class Positive {
         image(this.image, this.x, this.y, this.size, this.size);
     }
 
-    checkOverlap() {
+   /*checkOverlap() {
         let d = dist(player.x, player.y, this.x, this.y);
          if (d < player.size/2 + this.size/2) {
-             state = 'gameover';
-         }    
-    }
+            return true;
+         }
+            else {
+                return false;
+            }
+    }*/    
+    
 }
