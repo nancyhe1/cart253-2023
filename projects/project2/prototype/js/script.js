@@ -22,7 +22,7 @@ let bulletCounter = 0;
 /**
  * Description of preload
 */
-function preload() {
+function preload() { 
     bg = loadImage("assets/images/background-sky.png");
     Player.loadImage();
     //loading happy images
@@ -77,7 +77,11 @@ function title() {
 }
 
 function simulation() {
-    background(179, 245, 255); //i dont know why i can load my background image soa solid color will do
+    imageMode(CENTER);
+    background(179, 245, 255); //i dont know why i can load my background image soa solid color will do 179, 245, 255
+    fill(24, 84, 45);
+    rect(0, 450, 1000, 300);
+    fill(0);
     textSize(30);
     text("😁: "+(happyCounter)+"", 18, 40);
     text("😭: "+(bulletCounter)+"", 18, 75);
